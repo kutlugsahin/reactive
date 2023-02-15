@@ -16,6 +16,6 @@ export const RCWithHandle = createComponent.withHandle<Props, Handle>((props) =>
   });
 
   return () => {
-    return <div>RCWithHandle!</div>;
+    return <div>RCWithHandle!!!</div>;
   };
 });

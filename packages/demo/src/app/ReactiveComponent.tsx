@@ -55,6 +55,7 @@ export const ReactiveComponent = createComponent((props: ReactiveComponentProps)
     console.log('reactive comp render');
     return (
       <div>
+        AAAA!!!!
         {state.count} / {props.data}
         <button onClick={inc}>inc</button>
         <button onClick={incUnused}>inc unused</button>

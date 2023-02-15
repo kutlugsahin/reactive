@@ -47,6 +47,8 @@ export function useMountUnmountHooks(state: ComponentState) {
       state.imperativeHandle = undefined;
       state.layoutListeners = [];
       state.updateListeners = [];
+      state.mounts = [];
+      state.unMounts = [];
       state.dispose();
     };
   });
