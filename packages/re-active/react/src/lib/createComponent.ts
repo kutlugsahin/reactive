@@ -1,19 +1,41 @@
 import { effect, effectScope } from '@vue/reactivity';
-import { FC, forwardRef, Ref, useEffect, useImperativeHandle, useLayoutEffect, useRef } from 'react';
+import React, { FC, forwardRef, Ref, useEffect, useImperativeHandle, useLayoutEffect, useState } from 'react';
 import { beginRegisterLifecycles, endRegisterLifecycles } from './lifecycles';
 import { renderEffectScheduler } from './scheduler';
 import { ComponentState, ReactiveComponent } from './types';
-import { useForceRender, useMountUnmountHooks, useReactiveProps } from './utils';
+import { useForceRender, useReactiveProps } from './utils';
 
-function clearState(state: Partial<ComponentState>): void {
-  state.unMounts?.forEach((p) => p());
-  state.imperativeHandle = undefined;
-  state.layoutListeners = [];
-  state.updateListeners = [];
-  state.mounts = [];
-  state.unMounts = [];
-  state.computedRender = undefined!;
-  state.dispose?.();
+// function resetComponentState(state: Partial<ComponentState>): void {
+//   state.unMounts?.forEach((p) => p());
+//   state.imperativeHandle = undefined;
+//   state.layoutListeners = [];
+//   state.updateListeners = [];
+//   state.mounts = [];
+//   state.unMounts = [];
+//   state.computedRender = undefined!;
+//   state.dispose?.();
+// }
+
+function createComponentState(): ComponentState {
+  return {
+    imperativeHandle: undefined,
+    layoutListeners: [],
+    updateListeners: [],
+    mounts: [],
+    unMounts: [],
+    computedRender: undefined,
+    scope: undefined,
+    reset() {
+      this.unMounts.forEach((p) => p());
+      this.scope?.stop();
+      this.imperativeHandle = undefined;
+      this.layoutListeners = [];
+      this.updateListeners = [];
+      this.mounts = [];
+      this.unMounts = [];
+      this.computedRender = undefined;
+    },
+  };
 }
 
 function setupComponent<P>(
@@ -45,7 +67,6 @@ function setupComponent<P>(
     );
 
     state.computedRender = computedRender;
-    state.dispose = () => scope.stop();
   });
 }
 
@@ -54,53 +75,45 @@ export function createComponent<Props>(componentSetup: ReactiveComponent<Props>)
     const forceRender = useForceRender();
     const reactiveProps = useReactiveProps<Props>(props);
 
-    const state = useRef<Partial<ComponentState>>({});
-
-    const fullState = state.current as ComponentState;
+    const [state] = useState<ComponentState>(() => createComponentState());
 
     // run for first render
-    if (!fullState.computedRender) {
-      clearState(fullState);
-      setupComponent(componentSetup, fullState, reactiveProps, forceRender);
+    if (state.computedRender == null) {
+      state.reset();
+      setupComponent(componentSetup, state, reactiveProps, forceRender);
     }
 
     useEffect(() => {
-      if (!fullState.computedRender) {
+      if (state.computedRender == null) {
+        setupComponent(componentSetup, state, reactiveProps, forceRender);
         forceRender();
       }
 
-      fullState.mounts.forEach((p) => {
+      state.mounts.forEach((p) => {
         const unmount = p();
         if (typeof unmount === 'function') {
-          fullState.unMounts.push(unmount);
+          state.unMounts.push(unmount);
         }
       });
 
       return () => {
-        clearState(fullState);
+        state.reset();
       };
-    }, []);
+    }, [state, reactiveProps, forceRender]);
 
-    if (fullState.imperativeHandle) {
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      useImperativeHandle(ref, () => fullState.imperativeHandle);
+    if (state.imperativeHandle) {
+      useImperativeHandle(ref, () => state.imperativeHandle);
     }
 
-    // if (fullState.updateListeners.length) {
     useEffect(() => {
-      fullState.updateListeners.forEach((p) => p());
+      state.updateListeners.forEach((p) => p());
     });
-    // }
 
-    // if (fullState.layoutListeners.length) {
     useLayoutEffect(() => {
-      fullState.layoutListeners.forEach((p) => p());
+      state.layoutListeners.forEach((p) => p());
     });
-    // }
 
-    // useMountUnmountHooks(fullState);
-
-    return fullState.computedRender;
+    return state.computedRender as JSX.Element;
   };
 }
 

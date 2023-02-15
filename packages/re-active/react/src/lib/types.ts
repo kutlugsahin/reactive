@@ -7,14 +7,14 @@ export type ReactiveComponent<Props> = (props: Props) => () => JSX.Element;
 export type ReactiveComponentWithHandle<Props, Handle> = (props: Props, ref: React.Ref<Handle>) => () => JSX.Element;
 
 export type ComponentState = {
-  scope: EffectScope;
-  computedRender: JSX.Element;
-  dispose: () => void;
+  scope: EffectScope | undefined;
+  computedRender: JSX.Element | undefined;
   mounts: OnMount[];
   unMounts: OnUnmount[];
   imperativeHandle?: { [key: string]: () => any };
   updateListeners: Action[];
   layoutListeners: Action[];
+  reset(): void
 };
 
 export type Dispose = () => void;

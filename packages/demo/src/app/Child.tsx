@@ -8,7 +8,6 @@ export function Child() {
   }
 
   const [state] = useState(() => {
-
     return 4;
   })
 

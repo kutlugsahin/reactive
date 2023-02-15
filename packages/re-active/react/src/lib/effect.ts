@@ -44,7 +44,7 @@ export function layoutEffect(fn: () => void, options?: Omit<EffectOptions, 'type
   const currentComponentState = getCurrentComponentState();
   if (currentComponentState) {
     let shouldRun = false;
-    currentComponentState.updateListeners.push(() => {
+    currentComponentState.layoutListeners.push(() => {
       if (shouldRun) {
         effectRunner.effect.run();
         shouldRun = false;

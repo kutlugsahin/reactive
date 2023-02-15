@@ -1,4 +1,4 @@
-import { createComponent, onMounted, onUnmounted, reactive, effect, watch, toRef, updateEffect } from '@re-active';
+import { createComponent, onMounted, onUnmounted, reactive, effect, watch, toRef, updateEffect, layoutEffect } from '@re-active';
 
 interface ReactiveComponentProps {
   data: string;
@@ -36,8 +36,12 @@ export const ReactiveComponent = createComponent((props: ReactiveComponentProps)
   );
 
   updateEffect(() => {
-    console.log('state effect running', state.count);
+    console.log('state update effect running', state.count);
   });
+
+  layoutEffect(() => {
+    console.log('state layout effect running', state.count);
+  })
 
   onUnmounted(() => {
     console.log('unmounted');

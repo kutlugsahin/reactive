@@ -1,16 +1,16 @@
 import { reactive, isRef } from '@vue/reactivity';
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { ComponentState } from './types';
 import { useEffectOnce } from './useEffectOnce';
 
 export function useForceRender() {
   const [, forceRender] = useState({});
-  return () => forceRender({});
+  return useCallback(() => forceRender({}), []);
 }
 
 export function useReactiveProps<P>(props: P): P {
   // convert props to a reactive object
-  const { current: reactiveProps } = useRef(reactive({ ...(props as { [key: string]: unknown }) }));
+  const [reactiveProps] = useState(() => reactive({ ...(props as { [key: string]: unknown }) }));
   // keep the old props object for future comparison
   const prevProps = useRef<P>(props);
 
@@ -49,7 +49,7 @@ export function useMountUnmountHooks(state: ComponentState) {
       state.updateListeners = [];
       state.mounts = [];
       state.unMounts = [];
-      state.dispose();
+      // state.dispose();
     };
   });
 }
