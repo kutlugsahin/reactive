@@ -1,15 +1,27 @@
-import { useRef, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
+
+let i = 0;
 
 export function Child() {
-  const val = useRef({x:1});
-
-  if (val.current.x === 1) {
-    val.current.x = 3;
-  }
+  const id = useId();
+  const [val, setVal] = useState(0);
 
   const [state] = useState(() => {
-    return 4;
-  })
+    console.log('create state', i, id);
+    return { i: i++ };
+  });
 
-  return <div>Child!!</div>;
+  useEffect(() => {
+    console.log('mounts', state, id);
+
+    return () => {
+      console.log('unmounts', state, id);
+    };
+  });
+
+  console.log('renders', state, id);
+
+  return <div>Child!!
+    <button onClick={() => setVal(p => p+1)}>icn</button>
+  </div>;
 }

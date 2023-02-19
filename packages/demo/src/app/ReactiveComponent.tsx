@@ -55,6 +55,8 @@ export const ReactiveComponent = createComponent((props: ReactiveComponentProps)
     };
   });
 
+  console.log('reactive setup complete')
+
   return () => {
     console.log('reactive comp render');
     return (

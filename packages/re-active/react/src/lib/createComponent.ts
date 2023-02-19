@@ -1,53 +1,20 @@
-import { effect, effectScope } from '@vue/reactivity';
-import React, { FC, forwardRef, Ref, useEffect, useImperativeHandle, useLayoutEffect, useState } from 'react';
+import { effect, effectScope, UnwrapNestedRefs } from '@vue/reactivity';
+import React, { FC, forwardRef, Ref, useEffect, useImperativeHandle, useLayoutEffect, useRef, useState } from 'react';
 import { beginRegisterLifecycles, endRegisterLifecycles } from './lifecycles';
 import { renderEffectScheduler } from './scheduler';
-import { ComponentState, ReactiveComponent } from './types';
-import { useForceRender, useReactiveProps } from './utils';
-
-// function resetComponentState(state: Partial<ComponentState>): void {
-//   state.unMounts?.forEach((p) => p());
-//   state.imperativeHandle = undefined;
-//   state.layoutListeners = [];
-//   state.updateListeners = [];
-//   state.mounts = [];
-//   state.unMounts = [];
-//   state.computedRender = undefined!;
-//   state.dispose?.();
-// }
-
-function createComponentState(): ComponentState {
-  return {
-    imperativeHandle: undefined,
-    layoutListeners: [],
-    updateListeners: [],
-    mounts: [],
-    unMounts: [],
-    computedRender: undefined,
-    scope: undefined,
-    reset() {
-      this.unMounts.forEach((p) => p());
-      this.scope?.stop();
-      this.imperativeHandle = undefined;
-      this.layoutListeners = [];
-      this.updateListeners = [];
-      this.mounts = [];
-      this.unMounts = [];
-      this.computedRender = undefined;
-    },
-  };
-}
+import { ComponentState, ReactiveComponent, ReactiveProps, RenderResult } from './types';
+import { createComponentState, useForceRender, useReactiveProps } from './utils';
 
 function setupComponent<P>(
   componentSetup: ReactiveComponent<P>,
   state: ComponentState,
-  props: P,
+  props: UnwrapNestedRefs<ReactiveProps<P>>,
   forceRender: () => void
 ) {
   // clearState(state);
   const scope = effectScope();
   state.scope = scope;
-  let computedRender: JSX.Element;
+  let computedRender: RenderResult;
 
   scope.run(() => {
     beginRegisterLifecycles(state);
@@ -70,11 +37,11 @@ function setupComponent<P>(
   });
 }
 
-export function createComponent<Props>(componentSetup: ReactiveComponent<Props>): FC<Props> {
-  return (props: Props, ref: Ref<unknown>) => {
+export function createComponent<Props>(componentSetup: ReactiveComponent<Props>): FC<ReactiveProps<Props>> {
+  return (props: ReactiveProps<Props>, ref: Ref<unknown>) => {
     const forceRender = useForceRender();
-    const reactiveProps = useReactiveProps<Props>(props);
-
+    const reactiveProps = useReactiveProps<ReactiveProps<Props>>(props);
+    const shouldTriggerOnMount = useRef(false);
     const [state] = useState<ComponentState>(() => createComponentState());
 
     // run for first render
@@ -85,7 +52,8 @@ export function createComponent<Props>(componentSetup: ReactiveComponent<Props>)
 
     useEffect(() => {
       if (state.computedRender == null) {
-        setupComponent(componentSetup, state, reactiveProps, forceRender);
+        // setupComponent(componentSetup, state, reactiveProps, forceRender);
+        shouldTriggerOnMount.current = true;
         forceRender();
       }
 
@@ -106,6 +74,12 @@ export function createComponent<Props>(componentSetup: ReactiveComponent<Props>)
     }
 
     useEffect(() => {
+      if (shouldTriggerOnMount.current) {
+        state.mounts.forEach((p) => p());
+      }
+    });
+
+    useEffect(() => {
       state.updateListeners.forEach((p) => p());
     });
 
@@ -113,7 +87,7 @@ export function createComponent<Props>(componentSetup: ReactiveComponent<Props>)
       state.layoutListeners.forEach((p) => p());
     });
 
-    return state.computedRender as JSX.Element;
+    return state.computedRender as RenderResult;
   };
 }
 

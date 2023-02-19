@@ -1,16 +1,38 @@
-import { reactive, isRef } from '@vue/reactivity';
+import { reactive, isRef, UnwrapNestedRefs } from '@vue/reactivity';
 import { useCallback, useRef, useState } from 'react';
-import { ComponentState } from './types';
+import { ComponentState, Dictionary } from './types';
 import { useEffectOnce } from './useEffectOnce';
+
+export function createComponentState(): ComponentState {
+  return {
+    imperativeHandle: undefined,
+    layoutListeners: [],
+    updateListeners: [],
+    mounts: [],
+    unMounts: [],
+    computedRender: undefined,
+    scope: undefined,
+    reset() {
+      this.unMounts.forEach((p) => p());
+      this.scope?.stop();
+      this.imperativeHandle = undefined;
+      this.layoutListeners = [];
+      this.updateListeners = [];
+      this.mounts = [];
+      this.unMounts = [];
+      this.computedRender = undefined;
+    },
+  };
+}
 
 export function useForceRender() {
   const [, forceRender] = useState({});
   return useCallback(() => forceRender({}), []);
 }
 
-export function useReactiveProps<P>(props: P): P {
+export function useReactiveProps<P extends object>(props: P): UnwrapNestedRefs<P> {
   // convert props to a reactive object
-  const [reactiveProps] = useState(() => reactive({ ...(props as { [key: string]: unknown }) }));
+  const [reactiveProps] = useState(() => reactive({...props } as Dictionary)) ;
   // keep the old props object for future comparison
   const prevProps = useRef<P>(props);
 
@@ -31,7 +53,7 @@ export function useReactiveProps<P>(props: P): P {
   prevProps.current = props;
 
   // now we return a reactive props object which will also react to parent renders
-  return reactiveProps as P;
+  return reactiveProps as UnwrapNestedRefs<P>;
 }
 
 export function useMountUnmountHooks(state: ComponentState) {
