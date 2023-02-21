@@ -1,4 +1,4 @@
-import { EffectScope, effectScope } from 'reactivity';
+import { EffectScope, effectScope } from '@vue/reactivity';
 import React, {
   FC,
   forwardRef,
