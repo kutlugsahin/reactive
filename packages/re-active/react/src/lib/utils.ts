@@ -1,29 +1,6 @@
-import { reactive, isRef, UnwrapNestedRefs } from '@vue/reactivity';
+import { isRef, reactive, UnwrapNestedRefs } from '@vue/reactivity';
 import { useCallback, useRef, useState } from 'react';
-import { ComponentState, Dictionary } from './types';
-import { useEffectOnce } from './useEffectOnce';
-
-export function createComponentState(): ComponentState {
-  return {
-    imperativeHandle: undefined,
-    layoutListeners: [],
-    updateListeners: [],
-    mounts: [],
-    unMounts: [],
-    computedRender: undefined,
-    scope: undefined,
-    reset() {
-      this.unMounts.forEach((p) => p());
-      this.scope?.stop();
-      this.imperativeHandle = undefined;
-      this.layoutListeners = [];
-      this.updateListeners = [];
-      this.mounts = [];
-      this.unMounts = [];
-      this.computedRender = undefined;
-    },
-  };
-}
+import { Dictionary } from './types';
 
 export function useForceRender() {
   const [, forceRender] = useState({});
@@ -54,26 +31,6 @@ export function useReactiveProps<P extends object>(props: P): UnwrapNestedRefs<P
 
   // now we return a reactive props object which will also react to parent renders
   return reactiveProps as UnwrapNestedRefs<P>;
-}
-
-export function useMountUnmountHooks(state: ComponentState) {
-  useEffectOnce(() => {
-    state.mounts.forEach((p) => {
-      const unmount = p();
-      if (typeof unmount === 'function') {
-        state.unMounts.push(unmount);
-      }
-    });
-    return () => {
-      state.unMounts.forEach((p) => p());
-      state.imperativeHandle = undefined;
-      state.layoutListeners = [];
-      state.updateListeners = [];
-      state.mounts = [];
-      state.unMounts = [];
-      // state.dispose();
-    };
-  });
 }
 
 export const isArray = Array.isArray;

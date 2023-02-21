@@ -1,4 +1,5 @@
 export * from './lib/createComponent';
+// export * from './lib/observer';
 export * from './lib/observer';
 export { onMounted, onUnmounted, imperativeHandle } from './lib/lifecycles';
 export * from './lib/effect';

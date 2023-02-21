@@ -1,4 +1,4 @@
-import { EffectScope, Ref, UnwrapNestedRefs } from '@vue/reactivity';
+import { Ref, UnwrapNestedRefs } from '@vue/reactivity';
 import { FC, ReactElement } from 'react';
 export type Dictionary = { [key: string]: any };
 export type Action = () => void;
@@ -11,10 +11,9 @@ export type ReactiveComponent<P> = (props: UnwrapNestedRefs<ReactiveProps<P>>) =
 export type ReactiveComponentWithHandle<P, H> = (props: UnwrapNestedRefs<P>, ref: Ref<H>) => Renderer;
 
 export type ComponentState = {
-  scope: EffectScope | undefined;
-  computedRender: RenderResult | undefined;
   mounts: OnMount[];
   unMounts: OnUnmount[];
+  mountMounts: OnUnmount[];
   imperativeHandle?: { [key: string]: () => any };
   updateListeners: Action[];
   layoutListeners: Action[];

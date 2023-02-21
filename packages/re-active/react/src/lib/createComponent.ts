@@ -1,93 +1,82 @@
-import { effect, effectScope, UnwrapNestedRefs } from '@vue/reactivity';
-import React, { FC, forwardRef, Ref, useEffect, useImperativeHandle, useLayoutEffect, useRef, useState } from 'react';
+import { EffectScope, effectScope } from 'reactivity';
+import React, {
+  FC,
+  forwardRef,
+  Ref,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useLayoutEffect,
+  useRef,
+} from 'react';
 import { beginRegisterLifecycles, endRegisterLifecycles } from './lifecycles';
-import { renderEffectScheduler } from './scheduler';
+import { renderReactive } from './renderReactive';
 import { ComponentState, ReactiveComponent, ReactiveProps, RenderResult } from './types';
-import { createComponentState, useForceRender, useReactiveProps } from './utils';
-
-function setupComponent<P>(
-  componentSetup: ReactiveComponent<P>,
-  state: ComponentState,
-  props: UnwrapNestedRefs<ReactiveProps<P>>,
-  forceRender: () => void
-) {
-  // clearState(state);
-  const scope = effectScope();
-  state.scope = scope;
-  let computedRender: RenderResult;
-
-  scope.run(() => {
-    beginRegisterLifecycles(state);
-    const renderer = componentSetup(props);
-    endRegisterLifecycles();
-
-    const eff = effect(
-      () => {
-        if (!computedRender) {
-          computedRender = renderer();
-        } else {
-          state.computedRender = renderer();
-          forceRender();
-        }
-      },
-      { scheduler: renderEffectScheduler(() => eff) }
-    );
-
-    state.computedRender = computedRender;
-  });
-}
+import { useForceRender, useReactiveProps } from './utils';
 
 export function createComponent<Props>(componentSetup: ReactiveComponent<Props>): FC<ReactiveProps<Props>> {
   return (props: ReactiveProps<Props>, ref: Ref<unknown>) => {
     const forceRender = useForceRender();
     const reactiveProps = useReactiveProps<ReactiveProps<Props>>(props);
-    const shouldTriggerOnMount = useRef(false);
-    const [state] = useState<ComponentState>(() => createComponentState());
+    const state = useRef<ComponentState>(null!);
+    const renderer = useRef<() => RenderResult>(null!);
+    const setupScope = useRef<EffectScope | null>(null);
+    const shouldTriggerMounts = useRef(false);
 
     // run for first render
-    if (state.computedRender == null) {
-      state.reset();
-      setupComponent(componentSetup, state, reactiveProps, forceRender);
+    if (setupScope.current == null) {
+      setupScope.current = effectScope();
+      setupScope.current.run(() => {
+        state.current = beginRegisterLifecycles();
+        renderer.current = componentSetup(reactiveProps);
+        endRegisterLifecycles();
+      });
     }
 
-    useEffect(() => {
-      if (state.computedRender == null) {
-        // setupComponent(componentSetup, state, reactiveProps, forceRender);
-        shouldTriggerOnMount.current = true;
-        forceRender();
-      }
-
-      state.mounts.forEach((p) => {
+    const triggerMounts = useCallback(() => {
+      state.current.mounts.forEach((p) => {
         const unmount = p();
         if (typeof unmount === 'function') {
-          state.unMounts.push(unmount);
+          state.current.mountMounts.push(unmount);
         }
       });
+    }, []);
+
+    useEffect(() => {
+      if (setupScope.current == null) {
+        shouldTriggerMounts.current = true;
+        // will be triggered from renderReactive
+        // forceRender();
+      } else {
+        triggerMounts();
+      }
 
       return () => {
-        state.reset();
+        state.current.unMounts.forEach((p) => p());
+        state.current.mountMounts.forEach((p) => p());
+        state.current.reset();
+        setupScope.current?.stop();
+        setupScope.current = null;
       };
-    }, [state, reactiveProps, forceRender]);
+    }, [triggerMounts, forceRender]);
 
-    if (state.imperativeHandle) {
-      useImperativeHandle(ref, () => state.imperativeHandle);
+    if (state.current.imperativeHandle) {
+      useImperativeHandle(ref, () => state.current.imperativeHandle);
     }
 
     useEffect(() => {
-      if (shouldTriggerOnMount.current) {
-        state.mounts.forEach((p) => p());
+      if (shouldTriggerMounts.current && setupScope.current) {
+        shouldTriggerMounts.current = false;
+        triggerMounts();
       }
-    });
-
-    useEffect(() => {
-      state.updateListeners.forEach((p) => p());
+      state.current.updateListeners.forEach((p) => p());
     });
 
     useLayoutEffect(() => {
-      state.layoutListeners.forEach((p) => p());
+      state.current.layoutListeners.forEach((p) => p());
     });
 
-    return state.computedRender as RenderResult;
+    return renderReactive(renderer.current);
   };
 }
 

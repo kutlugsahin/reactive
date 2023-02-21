@@ -1,17 +1,17 @@
-import { EffectScheduler, ReactiveEffectRunner } from '@vue/reactivity';
+import { EffectScheduler } from '@vue/reactivity';
+import React from 'react';
 
-export const renderEffectScheduler: EffectScheduler = (
-  getEffect: () => ReactiveEffectRunner<unknown>
-) => {
+export const queueMicrotaskEffect: EffectScheduler = (callback: () => void, isEffectQueued: React.MutableRefObject<boolean>) => {
   let isRunning = false;
 
   return () => {
-    const effect = getEffect();
     if (!isRunning) {
       isRunning = true;
+      isEffectQueued.current = true;
       queueMicrotask(() => {
-        effect();
         isRunning = false;
+        callback();
+        isEffectQueued.current = false;
       });
     }
   };

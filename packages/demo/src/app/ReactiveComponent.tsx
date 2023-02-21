@@ -22,7 +22,7 @@ export const ReactiveComponent = createComponent((props: ReactiveComponentProps)
   }
 
   effect(() => {
-    console.log('effect is running', props.data);
+    console.log('data effect is running', props.data);
   });
 
   const data = toRef(props, 'data');
@@ -30,7 +30,7 @@ export const ReactiveComponent = createComponent((props: ReactiveComponentProps)
   watch(
     data,
     (newVal, oldVal) => {
-      console.log(`watch running new:${newVal}, old: ${oldVal}`);
+      console.log(`watch data running new:${newVal}, old: ${oldVal}`);
     },
     { immediate: true }
   );

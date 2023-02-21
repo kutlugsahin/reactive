@@ -1,9 +1,29 @@
 import { ComponentState, ImperativeHandle, OnMount, OnUnmount } from './types';
 
+export function createComponentState(): ComponentState {
+  return {
+    imperativeHandle: undefined,
+    layoutListeners: [],
+    updateListeners: [],
+    mounts: [],
+    unMounts: [],
+    mountMounts: [],
+    reset() {
+      this.imperativeHandle = undefined;
+      this.layoutListeners = [];
+      this.updateListeners = [];
+      this.mounts = [];
+      this.unMounts = [];
+      this.mountMounts = [];
+    },
+  };
+}
+
 let currentComponentState: ComponentState | undefined;
 
-export function beginRegisterLifecycles(state: ComponentState): void {
-  currentComponentState = state;
+export function beginRegisterLifecycles(): ComponentState {
+  currentComponentState = createComponentState();
+  return currentComponentState;
 }
 
 export function endRegisterLifecycles(): void {

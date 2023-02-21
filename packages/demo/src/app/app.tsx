@@ -1,5 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { useRef, useState } from 'react';
+import { Child } from './Child';
 import { Outer } from './Nested';
 import { Observer } from './Observer';
 import { ObserverComponent } from './ObserverCcomponent';
@@ -24,10 +25,10 @@ export function App() {
       {/* <RCWithHandle data={0} ref={handle}></RCWithHandle> */}
       <button onClick={() => handle.current?.reset()}>run handler</button>
       <div>
-        <Outer />
+        {/* <Outer /> */}
       </div>
-      <ObserverComponent count={val} />
-      <Observer/>
+      {/* <ObserverComponent count={val} /> */}
+      {/* <Observer/> */}
     </div>
   );
 }
