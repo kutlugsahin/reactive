@@ -1,4 +1,17 @@
 {
-  "name": "re-active",
-  "version": "0.0.1"
+  "name": "@re-active/react",
+  "version": "0.1.3",
+  "main": "dist/cjs/index.js",
+  "module": "dist/es/index.js",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "types": "dist/re-active.d.ts",
+  "author": {
+    "email": "kutlugsahin@gmail.com",
+    "name": "Kutlu Sahin"
+  },
+  "license": "ISC",
+  "umd": "dist/umd/index.js"
 }

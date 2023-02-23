@@ -1,7 +1,7 @@
-import { effect as coreEffect, ReactiveEffectOptions } from '@vue/reactivity';
 import { getCurrentComponentState } from './lifecycles';
+import { effect as coreEffect, ReactiveEffectOptions } from './reactivity';
+import { Dispose } from './types';
 
-export type Dispose = () => void;
 export type EffectOptions = Pick<ReactiveEffectOptions, 'onStop' | 'onTrack' | 'onTrigger'> & {
   type?: 'sync' | 'update' | 'layout';
 };

@@ -1,4 +1,3 @@
-import { EffectScope, effectScope } from '@vue/reactivity';
 import React, {
   FC,
   forwardRef,
@@ -11,8 +10,9 @@ import React, {
 } from 'react';
 import { beginRegisterLifecycles, endRegisterLifecycles } from './lifecycles';
 import { renderReactive } from './renderReactive';
-import { ComponentState, ReactiveComponent, ReactiveProps, RenderResult } from './types';
+import { EffectScope, effectScope } from './reactivity';
 import { useForceRender, useReactiveProps } from './utils';
+import { ComponentState, ReactiveComponent, ReactiveProps, RenderResult } from './types';
 
 export function createComponent<Props>(componentSetup: ReactiveComponent<Props>): FC<ReactiveProps<Props>> {
   return (props: ReactiveProps<Props>, ref: Ref<unknown>) => {

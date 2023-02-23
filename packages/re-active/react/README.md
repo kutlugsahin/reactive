@@ -1,7 +1,9 @@
-# re-active-react
+A reactive approach to create React application. Built on top of a reactivity system for making concise and high performant applications.
 
-This library was generated with [Nx](https://nx.dev).
+### 🚀 Blazing Fast
+### ☕ Concise
+### 💡 Intuitive
 
-## Running unit tests
+See [Reactive framework documentation](https://kutlugsahin.gitbook.io/re-active/).
 
-Run `nx test re-active-react` to execute the unit tests via [Jest](https://jestjs.io).
+See [Examples sandbox](https://codesandbox.io/s/re-active-i0ybq?file=/src/App.js).

@@ -1,5 +1,5 @@
-import { isRef, reactive, UnwrapNestedRefs } from '@vue/reactivity';
 import { useCallback, useRef, useState } from 'react';
+import { isRef, reactive, UnwrapNestedRefs } from './reactivity';
 import { Dictionary } from './types';
 
 export function useForceRender() {
@@ -9,7 +9,7 @@ export function useForceRender() {
 
 export function useReactiveProps<P extends object>(props: P): UnwrapNestedRefs<P> {
   // convert props to a reactive object
-  const [reactiveProps] = useState(() => reactive({...props } as Dictionary)) ;
+  const [reactiveProps] = useState(() => reactive({ ...props } as Dictionary));
   // keep the old props object for future comparison
   const prevProps = useRef<P>(props);
 

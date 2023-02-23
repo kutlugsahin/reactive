@@ -1,7 +1,7 @@
-import { Ref, ComputedRef, isRef, isReactive } from '@vue/reactivity';
+import { effect, EffectOptions } from './effect';
+import { ComputedRef, isReactive, isRef, Ref } from './reactivity';
 import { Dispose } from './types';
 import { traverse } from './utils';
-import { effect, EffectOptions } from './effect';
 
 export type WatchCallback<T> = (newValue: T, oldValue?: T) => void;
 

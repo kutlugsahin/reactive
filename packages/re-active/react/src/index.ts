@@ -1,31 +1,48 @@
 export * from './lib/createComponent';
+export * from './lib/effect';
+export { imperativeHandle, onMounted, onUnmounted } from './lib/lifecycles';
 // export * from './lib/observer';
 export * from './lib/observer';
-export { onMounted, onUnmounted, imperativeHandle } from './lib/lifecycles';
-export * from './lib/effect';
-export * from './lib/watch';
 export {
   computed,
-  reactive,
-  readonly,
-  ref,
-  isRef,
-  unref,
-  toRef,
-  toRefs,
+  customRef,
+  effectScope,
+  getCurrentScope,
   isProxy,
   isReactive,
   isReadonly,
-  shallowRef,
-  triggerRef,
-  customRef,
+  isRef,
+  isShallow,
+  markRaw,
+  onScopeDispose,
+  reactive,
+  readonly,
+  ref,
   shallowReactive,
   shallowReadonly,
+  shallowRef,
   toRaw,
-  markRaw,
-  effectScope,
-  getCurrentScope,
-  onScopeDispose,
-  isShallow,
-} from '@vue/reactivity';
-export type { Dispose, OnMount, ReactiveComponent, OnUnmount } from './lib/types';
+  toRef,
+  toRefs,
+  triggerRef,
+  unref,
+} from './lib/reactivity';
+export type { Dispose, OnMount, OnUnmount, ReactiveComponent } from './lib/types';
+export type {
+  ComputedGetter,
+  ComputedSetter,
+  ComputedRef,
+  Ref,
+  DebuggerOptions,
+  CustomRefFactory,
+  EffectScheduler,
+  EffectScope,
+  Raw,
+  UnwrapNestedRefs,
+  DeepReadonly,
+  UnwrapRef,
+  UnwrapRefSimple,
+  ToRef,
+  ToRefs,
+} from './lib/reactivity';
+export * from './lib/watch';

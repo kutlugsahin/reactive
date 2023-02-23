@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { UnwrapNestedRefs } from '@vue/reactivity';
 import { FC, memo, MemoExoticComponent } from 'react';
+import { UnwrapNestedRefs } from './reactivity';
 import { renderReactive } from './renderReactive';
 import { ReactiveProps, RenderResult } from './types';
 import { useReactiveProps } from './utils';

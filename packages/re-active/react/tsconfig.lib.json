@@ -1,13 +1,14 @@
 {
   "extends": "./tsconfig.json",
+
   "compilerOptions": {
-    "outDir": "../../../dist/out-tsc",
-    "types": ["node"]
+    "outDir": "dist",
+    "types": ["node"],
+    "declaration": true,
+    "declarationDir": "dist/types",
+    "composite": true,
   },
-  "files": [
-    "../../../node_modules/@nrwl/react/typings/cssmodule.d.ts",
-    "../../../node_modules/@nrwl/react/typings/image.d.ts"
-  ],
+  "files": [],
   "exclude": [
     "jest.config.ts",
     "src/**/*.spec.ts",
@@ -19,5 +20,5 @@
     "src/**/*.spec.jsx",
     "src/**/*.test.jsx"
   ],
-  "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx"]
+  "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx", "../../../node_modules/@vue/reactivity/dist/reactivity.d.ts"]
 }

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { effect, EffectScope, effectScope, ReactiveEffectRunner } from '@vue/reactivity';
 import { useEffect, useRef } from 'react';
+import { effect, EffectScope, effectScope, ReactiveEffectRunner } from './reactivity';
 import { queueMicrotaskEffect } from './scheduler';
 import { RenderResult } from './types';
 import { useForceRender } from './utils';

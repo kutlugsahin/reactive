@@ -1,4 +1,4 @@
-import { Ref, UnwrapNestedRefs } from '@vue/reactivity';
+import { Ref, UnwrapNestedRefs } from './reactivity';
 import { FC, ReactElement } from 'react';
 export type Dictionary = { [key: string]: any };
 export type Action = () => void;
