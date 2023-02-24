@@ -1,7 +1,7 @@
 export * from './lib/createComponent';
 export * from './lib/effect';
 export { imperativeHandle, onMounted, onUnmounted } from './lib/lifecycles';
-// export * from './lib/observer';
+export * from './lib/context';
 export * from './lib/observer';
 export {
   computed,

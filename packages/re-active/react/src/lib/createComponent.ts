@@ -1,8 +1,11 @@
 import React, {
+  createElement,
   FC,
   forwardRef,
+  memo,
   Ref,
   useCallback,
+  useContext,
   useEffect,
   useImperativeHandle,
   useLayoutEffect,
@@ -14,7 +17,7 @@ import { EffectScope, effectScope } from './reactivity';
 import { useForceRender, useReactiveProps } from './utils';
 import { ComponentState, ReactiveComponent, ReactiveProps, RenderResult } from './types';
 
-export function createComponent<Props>(componentSetup: ReactiveComponent<Props>): FC<ReactiveProps<Props>> {
+function createComponentFunction<Props>(componentSetup: ReactiveComponent<Props>): FC<ReactiveProps<Props>> {
   return (props: ReactiveProps<Props>, ref: Ref<unknown>) => {
     const forceRender = useForceRender();
     const reactiveProps = useReactiveProps<ReactiveProps<Props>>(props);
@@ -76,11 +79,22 @@ export function createComponent<Props>(componentSetup: ReactiveComponent<Props>)
       state.current.layoutListeners.forEach((p) => p());
     });
 
+    if (state.current.contextListeners) {
+      state.current.contextListeners.forEach(({ context, callback }) => {
+        const contextValue = useContext(context);
+        callback(contextValue);
+      });
+    }
+
     return renderReactive(renderer.current);
   };
 }
 
+export function createComponent<Props>(componentSetup: ReactiveComponent<Props>): FC<ReactiveProps<Props>> {
+  return memo(createComponentFunction(componentSetup));
+}
+
 createComponent.withHandle = function <Props, Handle>(component: ReactiveComponent<Props>) {
-  const functionalComponent = createComponent(component);
-  return forwardRef<Handle, Props>(functionalComponent as React.ForwardRefRenderFunction<Handle, Props>);
+  const functionalComponent = createComponentFunction(component);
+  return memo(forwardRef<Handle, Props>(functionalComponent as React.ForwardRefRenderFunction<Handle, Props>));
 };

@@ -1,3 +1,4 @@
+import { Context } from 'react';
 import { ComponentState, ImperativeHandle, OnMount, OnUnmount } from './types';
 
 export function createComponentState(): ComponentState {
@@ -8,6 +9,7 @@ export function createComponentState(): ComponentState {
     mounts: [],
     unMounts: [],
     mountMounts: [],
+    contextListeners: [],
     reset() {
       this.imperativeHandle = undefined;
       this.layoutListeners = [];
@@ -15,6 +17,7 @@ export function createComponentState(): ComponentState {
       this.mounts = [];
       this.unMounts = [];
       this.mountMounts = [];
+      this.contextListeners = [];
     },
   };
 }
@@ -49,5 +52,14 @@ export function onUnmounted(onUnmounted: OnUnmount) {
 export function imperativeHandle<T extends ImperativeHandle>(handle: T) {
   if (currentComponentState) {
     currentComponentState.imperativeHandle = handle;
+  }
+}
+
+export function registerContextConsumer<T>(context: Context<T>, callback: (value: T) => void) {
+  if (currentComponentState) {
+    currentComponentState.contextListeners.push({
+      context,
+      callback,
+    });
   }
 }

@@ -1,6 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { useRef, useState } from 'react';
 import { Child } from './Child';
+import { ContextComponent } from './ContextComponent';
 import { Outer } from './Nested';
 import { Observer } from './Observer';
 import { ObserverComponent } from './ObserverCcomponent';
@@ -29,6 +30,7 @@ export function App() {
       </div>
       {/* <ObserverComponent count={val} /> */}
       {/* <Observer/> */}
+      <ContextComponent/>
     </div>
   );
 }

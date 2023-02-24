@@ -1,5 +1,6 @@
 var dts = require('rollup-plugin-dts');
 var copy = require('rollup-plugin-copy');
+var del = require('rollup-plugin-delete');
 
 module.exports = [
   // …
@@ -12,11 +13,12 @@ module.exports = [
           {
             src: 'dist/types/packages/re-active/react/src/lib/reactivity.d.ts',
             dest: 'dist/types/packages/re-active/react/src/lib',
-            transform: (contents, filename) => contents.toString().replace('@vue/reactivity', './vue-reactivity')
+            transform: (contents, filename) => contents.toString().replace('@vue/reactivity', './vue-reactivity'),
           },
         ],
       }),
       dts.default(),
+      // del({ targets: 'dist/types' }),
     ],
   },
 ];

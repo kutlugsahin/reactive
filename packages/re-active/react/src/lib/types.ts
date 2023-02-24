@@ -1,5 +1,5 @@
 import { Ref, UnwrapNestedRefs } from './reactivity';
-import { FC, ReactElement } from 'react';
+import { Context, FC, ReactElement } from 'react';
 export type Dictionary = { [key: string]: any };
 export type Action = () => void;
 export type OnMount = () => void | OnUnmount;
@@ -17,6 +17,10 @@ export type ComponentState = {
   imperativeHandle?: { [key: string]: () => any };
   updateListeners: Action[];
   layoutListeners: Action[];
+  contextListeners: {
+    context: Context<any>;
+    callback: (value: any) => void;
+  }[];
   reset(): void;
 };
 
