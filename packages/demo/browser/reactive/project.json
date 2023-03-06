@@ -1,0 +1,72 @@
+{
+  "name": "demo-browser-reactive",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/demo/browser/reactive/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/packages/demo/browser/reactive"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/vite:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "demo-browser-reactive:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "demo-browser-reactive:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "demo-browser-reactive:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "preview": {
+      "executor": "@nrwl/vite:preview-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "demo-browser-reactive:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "demo-browser-reactive:build:development"
+        },
+        "production": {
+          "buildTarget": "demo-browser-reactive:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nrwl/vite:test",
+      "outputs": ["coverage/packages/demo/browser/reactive"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../../../coverage/packages/demo/browser/reactive"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/demo/browser/reactive/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,5 +1,4 @@
 import React, {
-  createElement,
   FC,
   forwardRef,
   memo,
@@ -9,13 +8,13 @@ import React, {
   useEffect,
   useImperativeHandle,
   useLayoutEffect,
-  useRef,
+  useRef
 } from 'react';
 import { beginRegisterLifecycles, endRegisterLifecycles } from './lifecycles';
-import { renderReactive } from './renderReactive';
 import { EffectScope, effectScope } from './reactivity';
-import { useForceRender, useReactiveProps } from './utils';
+import { renderReactive } from './renderReactive';
 import { ComponentState, ReactiveComponent, ReactiveProps, RenderResult } from './types';
+import { useForceRender, useReactiveProps } from './utils';
 
 function createComponentFunction<Props>(componentSetup: ReactiveComponent<Props>): FC<ReactiveProps<Props>> {
   return (props: ReactiveProps<Props>, ref: Ref<unknown>) => {
@@ -34,6 +33,13 @@ function createComponentFunction<Props>(componentSetup: ReactiveComponent<Props>
         renderer.current = componentSetup(reactiveProps);
         endRegisterLifecycles();
       });
+    } else {
+      if (state.current.contextListeners) {
+        state.current.contextListeners.forEach(({ context, callback }) => {
+          const contextValue = useContext(context);
+          callback(contextValue);
+        });
+      }
     }
 
     const triggerMounts = useCallback(() => {
@@ -78,13 +84,6 @@ function createComponentFunction<Props>(componentSetup: ReactiveComponent<Props>
     useLayoutEffect(() => {
       state.current.layoutListeners.forEach((p) => p());
     });
-
-    if (state.current.contextListeners) {
-      state.current.contextListeners.forEach(({ context, callback }) => {
-        const contextValue = useContext(context);
-        callback(contextValue);
-      });
-    }
 
     return renderReactive(renderer.current);
   };

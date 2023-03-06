@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@re-active": ["packages/re-active/react/src/index.ts"],
+      "@re-active/deneme": ["packages/deneme/src/index.ts"],
+      "@re-active/react": ["packages/re-active/react/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

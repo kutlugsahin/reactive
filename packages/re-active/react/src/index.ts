@@ -4,28 +4,30 @@ export { imperativeHandle, onMounted, onUnmounted } from './lib/lifecycles';
 export * from './lib/context';
 export * from './lib/observer';
 export {
+  ref,
   computed,
-  customRef,
-  effectScope,
-  getCurrentScope,
+  reactive,
+  readonly,
+  /* ----------- */
+  isRef,
+  unref,
+  toRef,
+  toRefs,
   isProxy,
   isReactive,
   isReadonly,
-  isRef,
-  isShallow,
-  markRaw,
-  onScopeDispose,
-  reactive,
-  readonly,
-  ref,
+  /* ----------- */
+  shallowRef,
+  triggerRef,
+  customRef,
   shallowReactive,
   shallowReadonly,
-  shallowRef,
   toRaw,
-  toRef,
-  toRefs,
-  triggerRef,
-  unref,
+  markRaw,
+  effectScope,
+  getCurrentScope,
+  onScopeDispose,
+  isShallow,
 } from './lib/reactivity';
 export type { Dispose, OnMount, OnUnmount, ReactiveComponent } from './lib/types';
 export type {
@@ -44,5 +46,8 @@ export type {
   UnwrapRefSimple,
   ToRef,
   ToRefs,
+  ShallowRef,
+  ShallowReactive,
+  ShallowUnwrapRef,
 } from './lib/reactivity';
 export * from './lib/watch';

@@ -9,7 +9,6 @@ export type Renderer = () => RenderResult;
 export type ReactiveProps<P> = { [key in keyof P]: P[key] | Ref<P[key]> };
 export type ReactiveComponent<P> = (props: UnwrapNestedRefs<ReactiveProps<P>>) => Renderer;
 export type ReactiveComponentWithHandle<P, H> = (props: UnwrapNestedRefs<P>, ref: Ref<H>) => Renderer;
-
 export type ComponentState = {
   mounts: OnMount[];
   unMounts: OnUnmount[];
