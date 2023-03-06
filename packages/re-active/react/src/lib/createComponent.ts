@@ -8,7 +8,7 @@ import React, {
   useEffect,
   useImperativeHandle,
   useLayoutEffect,
-  useRef
+  useRef,
 } from 'react';
 import { beginRegisterLifecycles, endRegisterLifecycles } from './lifecycles';
 import { EffectScope, effectScope } from './reactivity';

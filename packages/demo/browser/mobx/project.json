@@ -1,0 +1,72 @@
+{
+  "name": "demo-browser-mobx",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/demo/browser/mobx/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/packages/demo/browser/mobx"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/vite:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "demo-browser-mobx:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "demo-browser-mobx:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "demo-browser-mobx:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "preview": {
+      "executor": "@nrwl/vite:preview-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "demo-browser-mobx:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "demo-browser-mobx:build:development"
+        },
+        "production": {
+          "buildTarget": "demo-browser-mobx:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nrwl/vite:test",
+      "outputs": ["coverage/packages/demo/browser/mobx"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../../../coverage/packages/demo/browser/mobx"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/demo/browser/mobx/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  },
+  "tags": []
+}

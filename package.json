@@ -6,7 +6,9 @@
     "build:lib": "cd ./packages/re-active/react && rollup -c rollup.config.js",
     "build:types": "cd ./packages/re-active/react && rollup -c rollup.types.config.js",
     "publish:lib": "cd ./packages/re-active/react && npm publish --access=public",
-    "build:reactive": "npm run build:lib && npm run build:types && npm run build:types"
+    "build:reactive": "npm run build:lib && npm run build:types && npm run build:types",
+    "prod:browser-with-build": "nx build demo-browser-reactive && cd dist/packages/demo/browser/reactive && http-server .",
+    "prod:browser": "cd dist/packages/demo/browser/reactive && http-server ."
   },
   "private": true,
   "devDependencies": {
@@ -48,6 +50,7 @@
     "eslint-plugin-jsx-a11y": "6.6.1",
     "eslint-plugin-react": "7.31.11",
     "eslint-plugin-react-hooks": "4.6.0",
+    "http-server": "14.1.1",
     "jest": "28.1.1",
     "jest-environment-jsdom": "28.1.1",
     "jsdom": "~20.0.3",
@@ -69,9 +72,14 @@
   },
   "dependencies": {
     "@vue/reactivity": "3.3.0-alpha.4",
+    "mobx": "6.8.0",
+    "mobx-react": "7.6.0",
     "puppeteer": "19.7.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-redux": "8.0.5",
+    "redux": "4.2.1",
+    "redux-thunk": "2.4.2",
     "tslib": "^2.3.0"
   }
 }

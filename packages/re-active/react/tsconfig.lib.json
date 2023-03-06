@@ -6,7 +6,7 @@
     "types": ["node"],
     "declaration": true,
     "declarationDir": "dist/types",
-    "composite": true,
+    "composite": true
   },
   "files": [],
   "exclude": [
@@ -20,5 +20,11 @@
     "src/**/*.spec.jsx",
     "src/**/*.test.jsx"
   ],
-  "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx", "../../../node_modules/@vue/reactivity/dist/reactivity.d.ts"]
+  "include": [
+    "src/**/*.js",
+    "src/**/*.jsx",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "../../../node_modules/@vue/reactivity/dist/reactivity.d.ts"
+  ]
 }

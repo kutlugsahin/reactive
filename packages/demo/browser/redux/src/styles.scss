@@ -1,1 +1,240 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --primary-color: #375b71e6;
+  --selected-color: #375b7181;
+  --hover-color: #375b7148;
+}
+
+.nodecontainer {
+  margin-left: 15px;
+}
+
+.node {
+  padding: 2px 0px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  user-select: none;
+}
+
+.node:hover {
+  background-color: var(--hover-color);
+}
+
+.node.selected {
+  background-color: var(--selected-color);
+  border-radius: 4px;
+}
+
+.app {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  height: 40px;
+  background-color: var(--primary-color);
+  box-shadow: 0px 1px 6px 1px rgb(153 158 167);
+  z-index: 2;
+}
+
+.main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+.treepanel {
+  min-height: 0;
+  width: 300px;
+  flex-basis: 300px;
+  flex-shrink: 0;
+  border-right: 1px solid rgba(48, 86, 155, 0.2);
+  box-shadow: -1px 0px 6px -1px rgb(153 158 167);
+  padding: 10px;
+  overflow: auto;
+  z-index: 1;
+  font-size: 14px;
+  background-color: #f7f7f7;
+}
+
+.caret {
+  cursor: pointer;
+  display: inline-block;
+  font-size: 12px;
+  transition: transform 0.2s ease;
+  color: rgb(75, 82, 131);
+  width: 26px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.caret.expanded {
+  transform: rotate(90deg);
+}
+
+.loadingindicator {
+  cursor: pointer;
+  display: inline-block;
+  font-size: 12px;
+  color: rgb(75, 82, 131);
+  width: 26px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: spin 1s infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.mainpanel {
+  flex: 1;
+  background-color: #fafafa;
+  position: relative;
+  flex-shrink: 1;
+  min-width: 0;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.detailpanel {
+  min-height: 0;
+  width: 250px;
+  flex-basis: 250px;
+  flex-shrink: 0;
+  border-left: 1px solid rgba(48, 86, 155, 0.2);
+  box-shadow: 1px 0px 6px -1px rgb(153 158 167);
+  padding: 20px;
+  overflow-y: auto;
+  z-index: 1;
+  background-color: #f6f6f6;
+}
+
+.maincontainer {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  flex: 1;
+  min-height: 0;
+  background-color: white;
+}
+
+.tablecontainer {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  outline: none;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  transition: opacity 0.2s ease;
+  table-layout: fixed;
+}
+
+.table.loading {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 8px;
+  text-align: left;
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.table tbody td {
+  padding: 8px;
+  text-align: left;
+  border: 1px solid #ddd;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.table tbody tr {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f6f6f6;
+}
+
+.table tbody tr:hover {
+  background-color: var(--hover-color);
+}
+
+.table tbody tr.selected {
+  background-color: var(--selected-color);
+}
+
+.detailpanel h3 {
+  color: #555;
+  text-transform: uppercase;
+}
+
+.field {
+  margin-bottom: 10px;
+}
+
+.field .label {
+  margin-bottom: 4px;
+  display: inline-block;
+  text-transform: uppercase;
+}
+
+.field .input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  width: 100%;
+  color: #555;
+}
+
+.actions {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.actions button {
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  width: 40px;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #efefef;
+  cursor: pointer;
+  outline: none;
+}
+
+.actions button:hover {
+  background-color: #ddd;
+}
+
+.actions button:active {
+  background-color: #ccc;
+}
