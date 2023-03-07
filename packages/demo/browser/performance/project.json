@@ -1,0 +1,79 @@
+{
+  "name": "demo-browser-performance",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/demo/browser/performance/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/esbuild:esbuild",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/packages/demo/browser/performance",
+        "format": [
+          "cjs"
+        ],
+        "bundle": false,
+        "main": "packages/demo/browser/performance/src/main.ts",
+        "tsConfig": "packages/demo/browser/performance/tsconfig.app.json",
+        "assets": [
+          "packages/demo/browser/performance/src/assets"
+        ],
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "production": {
+          "esbuildOptions": {
+            "sourcemap": false
+          }
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/js:node",
+      "options": {
+        "buildTarget": "demo-browser-performance:build"
+      },
+      "configurations": {
+        "reactive": {
+          "buildTarget": "demo-browser-performance:build:production",
+          "args": [
+            "reactive"
+          ]
+        },
+        "mobx": {
+          "buildTarget": "demo-browser-performance:build:production",
+          "args": [
+            "mobx"
+          ]
+        },
+        "redux": {
+          "buildTarget": "demo-browser-performance:build:production",
+          "args": [
+            "redux"
+          ]
+        }
+      },
+      "defaultConfiguration": "reactive"
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "packages/demo/browser/performance/**/*.ts"
+        ]
+      }
+    }
+  },
+  "tags": []
+}
