@@ -1,4 +1,4 @@
-import { computed, effect, reactive, watch } from '@re-active/react';
+import { computed, reactive, watch } from '@re-active/react';
 
 export interface TodoItem {
   text: string;
@@ -59,11 +59,11 @@ export const actions = {
 
     state.todos = todos;
     state.filter = filter;
-    saveChanges();
+    watchChanges();
   },
 };
 
-function saveChanges() {
+function watchChanges() {
   watch(
     () => {
       return {
@@ -74,10 +74,7 @@ function saveChanges() {
     ({ todos, filter }) => {
       localStorage.setItem('todos', JSON.stringify(todos));
       localStorage.setItem('filter', JSON.stringify(filter));
-    }
+    },
+    { deep: true }
   );
-
-  effect(() => {
-    console.log(values.todosAll[0]);
-  });
 }

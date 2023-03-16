@@ -1,24 +1,30 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { createComponent, onMounted } from '@re-active/react';
+import { createComponent, onMounted, onUnmounted } from '@re-active/react';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
 import { List } from './components/List';
 import { actions } from './store';
 
-export const App = createComponent(() => {
+export default createComponent(() => {
   onMounted(() => {
     actions.populateStore();
+    console.log('mounted')
   });
 
-  return () => (
-    <section className="todoapp">
-      <div>
-        <Header />
-        <List />
-        <Footer />
-      </div>
-    </section>
-  );
-});
+  onUnmounted(() => {
+    console.log('unmounted');
+  });
 
-export default App;
+  return () => {
+    console.log('rendered')
+    return (
+      <section className="todoapp">
+        <div>
+          <Header />
+          <List />
+          <Footer />
+        </div>
+      </section>
+    );
+  }
+});

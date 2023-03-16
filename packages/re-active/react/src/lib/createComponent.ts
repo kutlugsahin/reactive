@@ -8,17 +8,16 @@ import React, {
   useEffect,
   useImperativeHandle,
   useLayoutEffect,
-  useRef,
+  useRef
 } from 'react';
 import { beginRegisterLifecycles, endRegisterLifecycles } from './lifecycles';
 import { EffectScope, effectScope } from './reactivity';
 import { renderReactive } from './renderReactive';
 import { ComponentState, ReactiveComponent, ReactiveProps, RenderResult } from './types';
-import { useForceRender, useReactiveProps } from './utils';
+import { useReactiveProps } from './utils';
 
 function createComponentFunction<Props>(componentSetup: ReactiveComponent<Props>): FC<ReactiveProps<Props>> {
   return (props: ReactiveProps<Props>, ref: Ref<unknown>) => {
-    const forceRender = useForceRender();
     const reactiveProps = useReactiveProps<ReactiveProps<Props>>(props);
     const state = useRef<ComponentState>(null!);
     const renderer = useRef<() => RenderResult>(null!);
@@ -51,12 +50,32 @@ function createComponentFunction<Props>(componentSetup: ReactiveComponent<Props>
       });
     }, []);
 
+    /**
+     * Strict mode only for handling second mount
+     */
+    useEffect(() => {
+      if (shouldTriggerMounts.current && setupScope.current) {
+        shouldTriggerMounts.current = false;
+        queueMicrotask(() => {
+          triggerMounts();
+        });
+      }
+    });
+
     useEffect(() => {
       if (setupScope.current == null) {
+        /**
+         * For strict mode second mounted call:
+         * renderReactive will forceRender and before that happen set shouldTriggerMounts flag to true
+         * to be handled by the useEffect above to call triggerMount
+         */
         shouldTriggerMounts.current = true;
-        // will be triggered from renderReactive
-        // forceRender();
-      } else {
+      } else if (!shouldTriggerMounts.current) {
+        /**
+         * This runs only for the first mount!! (second mount only in strict mode)
+         * if shouldTriggerMounts is set to true,(which means running the strict mode second mount) skip triggerMounts since
+         * we need to wait for next render to rebind effect scope
+         */
         triggerMounts();
       }
 
@@ -67,17 +86,13 @@ function createComponentFunction<Props>(componentSetup: ReactiveComponent<Props>
         setupScope.current?.stop();
         setupScope.current = null;
       };
-    }, [triggerMounts, forceRender]);
+    }, [triggerMounts]);
 
     if (state.current.imperativeHandle) {
       useImperativeHandle(ref, () => state.current.imperativeHandle);
     }
 
     useEffect(() => {
-      if (shouldTriggerMounts.current && setupScope.current) {
-        shouldTriggerMounts.current = false;
-        triggerMounts();
-      }
       state.current.updateListeners.forEach((p) => p());
     });
 

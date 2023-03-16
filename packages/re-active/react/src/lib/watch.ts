@@ -10,42 +10,38 @@ export type CoreWatchOptions = EffectOptions & {
   deep?: boolean;
 };
 
-function traverseAndReturn(source: any) {
+function traverseAndReturn(source: unknown) {
   traverse(source, new Set());
   return source;
 }
 
-export type WatchSource = (() => any) | Ref<any> | ComputedRef<any> | object;
+export type WatchSource = (() => unknown) | Ref<unknown> | ComputedRef<unknown> | object;
 
 export function watch<T>(source: Ref<T>, clb: WatchCallback<T>, options?: CoreWatchOptions): Dispose;
 export function watch<T>(source: () => T, clb: WatchCallback<T>, options?: CoreWatchOptions): Dispose;
 export function watch<T>(source: ComputedRef<T>, clb: WatchCallback<T>, options?: CoreWatchOptions): Dispose;
 export function watch<T extends object>(source: T, clb: WatchCallback<T>, options?: CoreWatchOptions): Dispose;
-export function watch<T extends WatchSource>(source: T, clb: WatchCallback<any>, options?: CoreWatchOptions): Dispose {
-  let oldValue: any;
+export function watch<T extends WatchSource>(
+  source: T,
+  clb: WatchCallback<unknown>,
+  options?: CoreWatchOptions
+): Dispose {
+  let oldValue: unknown;
   let shouldRun = options?.immediate || false;
 
-  let effectBody: () => any;
+  let effectBody: () => unknown;
 
   if (typeof source === 'function') {
-    effectBody = source as () => any;
+    effectBody = source as () => unknown;
   } else if (isRef(source)) {
-    if (options?.deep) {
-      effectBody = () => traverseAndReturn(source);
-    } else {
-      effectBody = () => (source as unknown as Ref<any>).value;
-    }
+    effectBody = () => (source as unknown as Ref<unknown>).value;
   } else if (isReactive(source)) {
-    if (options?.deep) {
-      effectBody = () => traverseAndReturn(source);
-    } else {
-      // watching first level fields
-      effectBody = () => ({ ...source });
-    }
+    // watching first level fields
+    effectBody = () => ({ ...source });
   }
 
   return effect(() => {
-    const newValue = effectBody();
+    const newValue = options?.deep ? traverseAndReturn(effectBody()) : effectBody();
 
     if (shouldRun) {
       clb(newValue, oldValue);

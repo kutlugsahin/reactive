@@ -1,4 +1,4 @@
-import { createComponent } from '@re-active/react';
+import { createComponent, effect } from '@re-active/react';
 import { actions, TodoItem } from '../store';
 
 interface ListItemProps {
@@ -14,6 +14,14 @@ export const ListItem = createComponent((props: ListItemProps) => {
 
     return classes.join(' ');
   }
+
+  effect(() => {
+    if (props.todo) {
+      (window as any).X = props.todo;
+    }
+
+    console.log(props.todo?.isCompleted);
+  })
 
   function removeTodoItem() {
     actions.removeTodo(props.todo);
