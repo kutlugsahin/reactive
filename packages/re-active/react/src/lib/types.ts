@@ -1,5 +1,5 @@
 import { Ref, UnwrapNestedRefs } from './reactivity';
-import { Context, FC, ReactElement } from 'react';
+import React, { Context, FC, ReactElement } from 'react';
 export type Dictionary = { [key: string]: any };
 export type Action = () => void;
 export type OnMount = () => void | OnUnmount;
@@ -8,7 +8,7 @@ export type RenderResult = ReactElement<any, any> | null;
 export type Renderer = () => RenderResult;
 export type ReactiveProps<P> = { [key in keyof P]: P[key] | Ref<P[key]> };
 export type ReactiveComponent<P> = (props: UnwrapNestedRefs<ReactiveProps<P>>) => Renderer;
-export type ReactiveComponentWithHandle<P, H> = (props: UnwrapNestedRefs<P>, ref: Ref<H>) => Renderer;
+export type ReactiveComponentWithHandle<P, H> = (props: UnwrapNestedRefs<ReactiveProps<P>>, ref: React.Ref<H>) => Renderer;
 export type ComponentState = {
   mounts: OnMount[];
   unMounts: OnUnmount[];

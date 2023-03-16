@@ -13,12 +13,12 @@ import React, {
 import { beginRegisterLifecycles, endRegisterLifecycles } from './lifecycles';
 import { EffectScope, effectScope } from './reactivity';
 import { renderReactive } from './renderReactive';
-import { ComponentState, ReactiveComponent, ReactiveProps, RenderResult } from './types';
+import { ComponentState, ReactiveComponent, ReactiveComponentWithHandle, ReactiveProps, RenderResult } from './types';
 import { useReactiveProps } from './utils';
 
-function createComponentFunction<Props>(componentSetup: ReactiveComponent<Props>): FC<ReactiveProps<Props>> {
+function createComponentFunction<Props>(componentSetup: ReactiveComponentWithHandle<Props, unknown>): FC<ReactiveProps<Props>> {
   return (props: ReactiveProps<Props>, ref: Ref<unknown>) => {
-    const reactiveProps = useReactiveProps<ReactiveProps<Props>>(props);
+    const reactiveProps = useReactiveProps(props);
     const state = useRef<ComponentState>(null!);
     const renderer = useRef<() => RenderResult>(null!);
     const setupScope = useRef<EffectScope | null>(null);
@@ -29,7 +29,7 @@ function createComponentFunction<Props>(componentSetup: ReactiveComponent<Props>
       setupScope.current = effectScope();
       setupScope.current.run(() => {
         state.current = beginRegisterLifecycles();
-        renderer.current = componentSetup(reactiveProps);
+        renderer.current = componentSetup(reactiveProps, ref);
         endRegisterLifecycles();
       });
     } else {
