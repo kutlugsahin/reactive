@@ -17,7 +17,7 @@ import { ComponentState, ReactiveComponent, ReactiveComponentWithHandle, Reactiv
 import { useReactiveProps } from './utils';
 
 function createComponentFunction<Props>(componentSetup: ReactiveComponentWithHandle<Props, unknown>): FC<ReactiveProps<Props>> {
-  return (props: ReactiveProps<Props>, ref: Ref<unknown>) => {
+  const FunctionalComponent: FC<ReactiveProps<Props>> = (props: ReactiveProps<Props>, ref: Ref<unknown>) => {
     const reactiveProps = useReactiveProps(props);
     const state = useRef<ComponentState>(null!);
     const renderer = useRef<() => RenderResult>(null!);
@@ -35,6 +35,7 @@ function createComponentFunction<Props>(componentSetup: ReactiveComponentWithHan
     } else {
       if (state.current.contextListeners) {
         state.current.contextListeners.forEach(({ context, callback }) => {
+          // eslint-disable-next-line react-hooks/rules-of-hooks
           const contextValue = useContext(context);
           callback(contextValue);
         });
@@ -89,6 +90,7 @@ function createComponentFunction<Props>(componentSetup: ReactiveComponentWithHan
     }, [triggerMounts]);
 
     if (state.current.imperativeHandle) {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
       useImperativeHandle(ref, () => state.current.imperativeHandle);
     }
 
@@ -102,6 +104,10 @@ function createComponentFunction<Props>(componentSetup: ReactiveComponentWithHan
 
     return renderReactive(renderer.current);
   };
+
+  FunctionalComponent.displayName = componentSetup.name;
+
+  return FunctionalComponent;
 }
 
 export function createComponent<Props>(componentSetup: ReactiveComponent<Props>): FC<ReactiveProps<Props>> {

@@ -2,7 +2,7 @@ import { createComponent } from '@re-active/react';
 import { actions, values } from '../store';
 import { ListItem } from './ListItem';
 
-export const List = createComponent(() => {
+export const List = createComponent(function List() {
   function toggleCheckAll(check: boolean) {
     actions.checkAll(check);
   }
