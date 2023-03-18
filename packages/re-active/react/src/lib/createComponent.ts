@@ -96,13 +96,16 @@ function createComponentFunction<Props>(componentSetup: ReactiveComponentWithHan
 
     useEffect(() => {
       state.current.updateListeners.forEach((p) => p());
+      state.current.willRender = false;
     });
 
     useLayoutEffect(() => {
       state.current.layoutListeners.forEach((p) => p());
     });
 
-    return renderReactive(renderer.current);
+    return renderReactive(renderer.current, () => {
+      state.current.willRender = true;
+    });
   };
 
   FunctionalComponent.displayName = componentSetup.name;

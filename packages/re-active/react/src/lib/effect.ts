@@ -2,8 +2,11 @@ import { getCurrentComponentState } from './lifecycles';
 import { effect as coreEffect, ReactiveEffectOptions } from './reactivity';
 import { Dispose } from './types';
 
-export type EffectOptions = Pick<ReactiveEffectOptions, 'onStop' | 'onTrack' | 'onTrigger'> & {
-  type?: 'sync' | 'update' | 'layout';
+type ListenerEffectType = 'update' | 'layout';
+type EffectType = 'sync' | ListenerEffectType;
+
+export type EffectOptions = Pick<ReactiveEffectOptions, 'onTrack' | 'onTrigger'> & {
+  type?: EffectType;
 };
 
 export function effect(fn: () => void, options?: EffectOptions): Dispose {
@@ -15,23 +18,33 @@ export function effect(fn: () => void, options?: EffectOptions): Dispose {
   return coreEffect(fn, options).effect.stop;
 }
 
-export function updateEffect(fn: () => void, options?: Omit<EffectOptions, 'type'>): Dispose {
+function listenerEffect(fn: () => void, type: ListenerEffectType, options?: Omit<EffectOptions, 'type'>): Dispose {
   const currentComponentState = getCurrentComponentState();
 
   if (currentComponentState) {
     let shouldRun = false;
 
-    currentComponentState.updateListeners.push(() => {
+    const triggerEffect = () => {
       if (shouldRun) {
         effectRunner.effect.run();
         shouldRun = false;
       }
-    });
+    };
+
+    const flushListener =
+      type === 'update' ? currentComponentState.updateListeners : currentComponentState.layoutListeners;
+
+    flushListener.push(triggerEffect);
 
     const effectRunner = coreEffect(fn, {
       ...options,
       scheduler: () => {
         shouldRun = true;
+        queueMicrotask(() => {
+          if (!currentComponentState.willRender) {
+            triggerEffect();
+          }
+        });
       },
     });
     return effectRunner.effect.stop;
@@ -40,24 +53,10 @@ export function updateEffect(fn: () => void, options?: Omit<EffectOptions, 'type
   return coreEffect(fn, options).effect.stop;
 }
 
-export function layoutEffect(fn: () => void, options?: Omit<EffectOptions, 'type'>): Dispose {
-  const currentComponentState = getCurrentComponentState();
-  if (currentComponentState) {
-    let shouldRun = false;
-    currentComponentState.layoutListeners.push(() => {
-      if (shouldRun) {
-        effectRunner.effect.run();
-        shouldRun = false;
-      }
-    });
-    const effectRunner = coreEffect(fn, {
-      ...options,
-      scheduler: () => {
-        shouldRun = true;
-      },
-    });
-    return effectRunner.effect.stop;
-  }
+export function updateEffect(fn: () => void, options?: Omit<EffectOptions, 'type'>): Dispose {
+  return listenerEffect(fn, 'update', options);
+}
 
-  return coreEffect(fn, options).effect.stop;
+export function layoutEffect(fn: () => void, options?: Omit<EffectOptions, 'type'>): Dispose {
+  return listenerEffect(fn, 'layout', options);
 }

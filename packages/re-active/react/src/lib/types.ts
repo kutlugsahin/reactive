@@ -21,6 +21,7 @@ export type ComponentState = {
     callback: (value: any) => void;
   }[];
   reset(): void;
+  willRender: boolean;
 };
 
 export type Dispose = () => void;

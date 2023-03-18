@@ -10,6 +10,7 @@ export function createComponentState(): ComponentState {
     unMounts: [],
     mountMounts: [],
     contextListeners: [],
+    willRender: false,
     reset() {
       this.imperativeHandle = undefined;
       this.layoutListeners = [];
@@ -18,6 +19,7 @@ export function createComponentState(): ComponentState {
       this.unMounts = [];
       this.mountMounts = [];
       this.contextListeners = [];
+      this.willRender = false;
     },
   };
 }

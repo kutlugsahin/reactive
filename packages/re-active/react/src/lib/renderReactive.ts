@@ -5,7 +5,7 @@ import { queueMicrotaskEffect } from './scheduler';
 import { RenderResult } from './types';
 import { useForceRender } from './utils';
 
-export function renderReactive(renderer: () => RenderResult) {
+export function renderReactive(renderer: () => RenderResult, willRender?: () => void) {
   const forceRender = useForceRender();
   const scope = useRef<EffectScope | null>(null);
   const render = useRef<RenderResult>(null);
@@ -27,7 +27,7 @@ export function renderReactive(renderer: () => RenderResult) {
             if (isEffectQueued.current) {
               forceRender();
             }
-          }, isEffectQueued),
+          }, isEffectQueued, willRender),
         }
       );
     });

@@ -3,7 +3,6 @@ import { createComponent, onMounted, onUnmounted } from '@re-active/react';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
 import { List } from './components/List';
-import { actions } from './store';
 
 export default createComponent(() => {
   onMounted(() => {
