@@ -1,4 +1,4 @@
-import { createComponent } from '@re-active/react';
+import { createComponent, effect, updateEffect } from '@re-active/react';
 import { actions, values } from '../store';
 import { ListItem } from './ListItem';
 
@@ -6,6 +6,11 @@ export const List = createComponent(function List() {
   function toggleCheckAll(check: boolean) {
     actions.checkAll(check);
   }
+
+  effect(() => {
+    console.log('effect')
+    values.todos.length
+  })
 
   return () => (
     <section className="main">

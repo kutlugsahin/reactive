@@ -9,10 +9,19 @@ export interface TodoItem {
 
 type Filter = 'all' | 'active' | 'completed';
 
-const state = reactive({
-  todos: [] as TodoItem[],
-  filter: 'all' as Filter,
-});
+function getStateFomLocalStorage() {
+  return {
+    todos: JSON.parse(localStorage.getItem('todos') || '[]') as TodoItem[] as TodoItem[],
+    filter: JSON.parse(localStorage.getItem('filter') || '"all"') as Filter,
+  };
+}
+
+function saveStateToLocalStorage({ filter, todos }: ReturnType<typeof getStateFomLocalStorage>) {
+  localStorage.setItem('todos', JSON.stringify(todos));
+  localStorage.setItem('filter', JSON.stringify(filter));
+}
+
+const state = reactive(getStateFomLocalStorage());
 
 export const values = reactive({
   leftTodosCount: computed(() => state.todos.filter((p) => !p.isCompleted).length),
@@ -53,28 +62,6 @@ export const actions = {
   clearCompleted() {
     state.todos = state.todos.filter((p) => !p.isCompleted);
   },
-  populateStore() {
-    const todos = JSON.parse(localStorage.getItem('todos') || '[]') as TodoItem[];
-    const filter = JSON.parse(localStorage.getItem('filter') || '"all"') as Filter;
-
-    state.todos = todos;
-    state.filter = filter;
-    watchChanges();
-  },
 };
 
-function watchChanges() {
-  watch(
-    () => {
-      return {
-        todos: values.todosAll,
-        filter: values.filter,
-      };
-    },
-    ({ todos, filter }) => {
-      localStorage.setItem('todos', JSON.stringify(todos));
-      localStorage.setItem('filter', JSON.stringify(filter));
-    },
-    { deep: true }
-  );
-}
+watch(state, saveStateToLocalStorage, { deep: true });

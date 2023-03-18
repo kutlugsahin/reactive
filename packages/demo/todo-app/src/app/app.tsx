@@ -7,8 +7,7 @@ import { actions } from './store';
 
 export default createComponent(() => {
   onMounted(() => {
-    actions.populateStore();
-    console.log('mounted')
+    console.log('mounted');
   });
 
   onUnmounted(() => {
@@ -16,7 +15,7 @@ export default createComponent(() => {
   });
 
   return () => {
-    console.log('rendered')
+    console.log('rendered');
     return (
       <section className="todoapp">
         <div>
@@ -26,5 +25,5 @@ export default createComponent(() => {
         </div>
       </section>
     );
-  }
+  };
 });
