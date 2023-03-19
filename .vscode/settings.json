@@ -1,7 +1,10 @@
 {
   "cSpell.words": [
+    "codesandbox",
     "lifecycles",
     "Lifecycles",
+    "sandpack",
+    "Sandpack",
     "todos"
   ],
   "typescript.tsdk": "node_modules\\typescript\\lib"
