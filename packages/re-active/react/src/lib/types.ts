@@ -30,4 +30,4 @@ export type ImperativeHandle = {
   [key: string]: (...args: any[]) => any;
 };
 
-export type ObserverComponent<P> = FC<UnwrapNestedRefs<ReactiveProps<P>>>;
+export type ComponentDefinition<P> = FC<UnwrapNestedRefs<ReactiveProps<P>>> | ReactiveComponentWithHandle<P, unknown>;

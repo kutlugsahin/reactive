@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { createComponent, onMounted, onUnmounted } from '@re-active/react';
+import { createComponent, onMounted, onUnmounted, ref } from '@re-active/react';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
 import { List } from './components/List';
@@ -18,7 +18,7 @@ export default createComponent(() => {
     return (
       <section className="todoapp">
         <div>
-          <Header />
+          <Header/>
           <List />
           <Footer />
         </div>

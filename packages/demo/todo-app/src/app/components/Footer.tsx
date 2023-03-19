@@ -1,7 +1,7 @@
-import { createComponent } from '@re-active/react';
+import { component } from '@re-active/react';
 import { actions, values } from '../store';
 
-export const Footer = createComponent(() => {
+export const Footer = component(() => {
   return () => (
     <footer className="footer">
       <span className="todo-count">

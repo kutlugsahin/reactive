@@ -1,7 +1,7 @@
-import { createComponent, ref } from '@re-active/react';
+import { component, ref } from '@re-active/react';
 import { actions } from '../store';
 
-export const Header = createComponent(() => {
+export const Header = component(() => {
   const todoText = ref('');
 
   function createTodoItem() {
