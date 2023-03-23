@@ -1,28 +1,15 @@
+import { autocompletion, completionKeymap } from '@codemirror/autocomplete';
 import {
   SandpackCodeEditor,
   SandpackConsole,
-  SandpackFileExplorer,
   SandpackFiles,
   SandpackLayout,
   SandpackPreview,
   SandpackProvider,
   useSandpack,
-  Sandpack as CodeSandpack,
-  defaultDark,
-  SandpackStack,
 } from '@codesandbox/sandpack-react';
-import { autocompletion, completionKeymap } from '@codemirror/autocomplete';
-import {
-  atomDark,
-  githubLight,
-  gruvboxLight,
-  ecoLight,
-  aquaBlue,
-  gruvboxDark,
-  sandpackDark,
-  freeCodeCampDark,
-} from '@codesandbox/sandpack-themes';
-import { forwardRef, useEffect, useRef } from 'react';
+import { aquaBlue, freeCodeCampDark } from '@codesandbox/sandpack-themes';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { routes as appRoutes } from '../routes';
 
@@ -31,7 +18,9 @@ import index from './sandbox-index.tsx?raw';
 import routes from './sandpack-routes?raw';
 import styleCss from './styles.css?raw';
 
+import { component } from '@re-active/react';
 import styles from '../app.module.scss';
+import { store } from '../components/store';
 
 const defaultFiles: SandpackFiles = {
   '/styles.css': {
@@ -61,11 +50,32 @@ function getAllFiles(): SandpackFiles {
   }, {} as SandpackFiles);
 }
 
-const Dispatcher = () => {
+const Dispatcher = component(({ loaded }: { loaded: () => void }) => {
   const location = useLocation();
   const { dispatch } = useSandpack();
 
   const path = location.pathname;
+
+  useEffect(() => {
+    function listen(ev: MessageEvent) {
+      if (ev.data.type === 'app-loaded') {
+        dispatch({
+          type: 'urlchange',
+          url: path,
+          back: false,
+          forward: true,
+        });
+
+        loaded();
+      }
+    }
+
+    window.addEventListener('message', listen);
+
+    return () => {
+      window.removeEventListener('message', listen);
+    };
+  }, [path, dispatch, loaded]);
 
   useEffect(() => {
     dispatch({
@@ -75,52 +85,21 @@ const Dispatcher = () => {
       forward: true,
     });
   }, [path]);
-
   return null;
-};
+});
 
-export const Sandpack = forwardRef(() => {
+export const Sandpack = component(() => {
   const location = useLocation();
+  const [isLoaded, setIsLoaded] = useState(false);
   const path = location.pathname;
 
   const files = appRoutes.find((p) => p.route === path)?.files;
   const visibleFiles = files ? Object.keys(files) : [];
 
-  // useEffect(() => {
-  //   const iframe = document.querySelector('iframe') as HTMLIFrameElement;
-
-  //   if (iframe) {
-  //     iframe.contentWindow?.postMessage({ type: 'urlchange', url: path }, '*');
-  //   }
-  // }, [path]);
-
   return (
-    // <CodeSandpack
-    //   template="react-ts"
-    //   theme={atomDark}
-    //   customSetup={{
-    //     dependencies: {
-    //       '@re-active/react': '1.1.2',
-    //       'react-router-dom': '6.9.0',
-    //       typescript: '4.9.5',
-    //     },
-    //   }}
-    //   files={{
-    //     ...defaultFiles,
-    //     ...getAllFiles(),
-    //   }}
-    //   options={{
-    //     showConsole: true,
-    //     showConsoleButton: true,
-    //     showNavigator: true,
-    //     visibleFiles,
-    //     activeFile: `${path}/App.tsx`,
-
-    //   }}
-    // />
     <SandpackProvider
       template="react-ts"
-      theme={freeCodeCampDark}
+      theme={store.theme === 'dark' ? freeCodeCampDark : aquaBlue}
       customSetup={{
         dependencies: {
           react: '18.2.0',
@@ -139,7 +118,7 @@ export const Sandpack = forwardRef(() => {
         visibleFiles,
       }}
     >
-      <Dispatcher />
+      <Dispatcher loaded={() => setIsLoaded(true)} />
       <SandpackLayout>
         {/* <SandpackFileExplorer autoHiddenFiles/> */}
         <SandpackCodeEditor
@@ -147,10 +126,16 @@ export const Sandpack = forwardRef(() => {
           extensions={[autocompletion()]}
           extensionsKeymap={[...completionKeymap]}
         />
-        {/* <MonacoEditor /> */}
         <div className={styles.rightPanel}>
-          <SandpackPreview />
-          <SandpackConsole />
+          <div className={styles.preview}>
+            <SandpackPreview />
+            {!isLoaded && (
+              <div className={styles.loading}>
+                <span>Loading...</span>
+              </div>
+            )}
+          </div>
+          <SandpackConsole title="Console" />
         </div>
       </SandpackLayout>
     </SandpackProvider>

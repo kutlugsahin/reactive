@@ -5,7 +5,8 @@
     "Lifecycles",
     "sandpack",
     "Sandpack",
-    "todos"
+    "todos",
+    "transform"
   ],
   "typescript.tsdk": "node_modules\\typescript\\lib"
 }

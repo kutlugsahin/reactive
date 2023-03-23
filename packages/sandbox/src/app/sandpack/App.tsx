@@ -12,6 +12,13 @@ const Routing = () => {
   };
 
   useEffect(() => {
+    window.parent.postMessage(
+      {
+        type: 'app-loaded',
+      },
+      '*'
+    );
+
     window.addEventListener('message', listen);
     return () => window.removeEventListener('message', listen);
   }, []);

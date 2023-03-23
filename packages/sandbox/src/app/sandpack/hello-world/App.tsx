@@ -8,7 +8,7 @@ export default createComponent(() => {
   }
 
   return () => (
-    <div>
+    <div className='card'>
       Current Value: {count.value}
       <br />
       <button onClick={increment}>increment</button>
