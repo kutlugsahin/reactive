@@ -9,26 +9,20 @@ import React, {
   useEffect,
   useImperativeHandle,
   useLayoutEffect,
-  useRef,
+  useRef
 } from 'react';
 import { beginRegisterLifecycles, endRegisterLifecycles } from './lifecycles';
 import { EffectScope, effectScope } from './reactivity';
-import { renderReactive } from './renderReactive';
-import { ComponentState, ComponentDefinition, ReactiveProps, RenderResult } from './types';
-import { useReactiveProps } from './utils';
-
-function renderAsFunctionalComponent(
-  setupScope: React.MutableRefObject<EffectScope | null>,
-  renderer: React.MutableRefObject<() => RenderResult>
-) {
-  useEffect(
-    () => () => {
-      setupScope.current?.stop();
-    },
-    []
-  );
-  return renderReactive(renderer.current);
-}
+import { renderUniversal } from './renderUniversal';
+import {
+  ComponentDefinition,
+  ComponentState,
+  ReactiveProps,
+  Renderer,
+  RenderResult,
+  UniversalRenderState
+} from './types';
+import { useForceRender, useReactiveProps } from './utils';
 
 function createComponentFunction<Props>(componentSetup: ComponentDefinition<Props>): FC<ReactiveProps<Props>> {
   const FunctionalComponent: FC<ReactiveProps<Props>> = (props: ReactiveProps<Props>, ref: Ref<unknown>) => {
@@ -37,13 +31,23 @@ function createComponentFunction<Props>(componentSetup: ComponentDefinition<Prop
     const renderer = useRef<() => RenderResult>(null!);
     const setupScope = useRef<EffectScope | null>(null);
     const shouldTriggerMounts = useRef(false);
-    const isFunctionalComponent = useRef(false);
+    const forceRender = useForceRender();
+    const isFunctionalComponent = useRef<boolean>(false);
+    const functionalComponentRenderResult = useRef<RenderResult>(null);
+
+    const universalRenderState = useRef<UniversalRenderState>({
+      forceRender,
+      effectRunner: null,
+      isEffectQueued: false,
+      render: null,
+      scope: null,
+    });
 
     /**
      * componentSetup is in form of FC so we render as FC and return
      */
     if (isFunctionalComponent.current) {
-      return renderAsFunctionalComponent(setupScope, renderer);
+      return renderUniversal(universalRenderState.current, () => componentSetup(reactiveProps, ref)) as RenderResult;
     }
 
     // run for first render
@@ -51,16 +55,16 @@ function createComponentFunction<Props>(componentSetup: ComponentDefinition<Prop
       setupScope.current = effectScope();
       setupScope.current.run(() => {
         state.current = beginRegisterLifecycles();
-        const setupResult = componentSetup(reactiveProps, ref);
+        const setupResult = renderUniversal(universalRenderState.current, () => componentSetup(reactiveProps, ref));
         endRegisterLifecycles();
 
-        // if setup result is a function set renderer to setupResult
-        if (typeof setupResult === 'function') {
-          renderer.current = setupResult;
-        } else {
+        if (typeof setupResult !== 'function') {
           // if setup result is not function, it means we have a classic FC
           isFunctionalComponent.current = true;
-          return setupResult;
+          functionalComponentRenderResult.current = setupResult as RenderResult;
+        } else {
+          // proceed with renderer
+          renderer.current = setupResult as Renderer;
         }
       });
     } else {
@@ -70,6 +74,10 @@ function createComponentFunction<Props>(componentSetup: ComponentDefinition<Prop
           callback(contextValue);
         });
       }
+    }
+
+    if (isFunctionalComponent.current) {
+      return functionalComponentRenderResult.current;
     }
 
     const triggerMounts = useCallback(() => {
@@ -132,9 +140,9 @@ function createComponentFunction<Props>(componentSetup: ComponentDefinition<Prop
       state.current.layoutListeners.forEach((p) => p());
     });
 
-    return renderReactive(renderer.current, () => {
+    return renderUniversal(universalRenderState.current, renderer.current, () => {
       state.current.willRender = true;
-    });
+    }) as RenderResult;
   };
 
   FunctionalComponent.displayName = componentSetup.name;

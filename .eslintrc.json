@@ -1,6 +1,6 @@
 {
   "root": true,
-  "ignorePatterns": ["**/*", "**/dist/**/*", "*.js", "*.d.ts"],
+  "ignorePatterns": ["**/*", "**/dist/**/*", "*.js", "*.d.ts", "*.html"],
   "plugins": ["@nrwl/nx"],
   "overrides": [
     {

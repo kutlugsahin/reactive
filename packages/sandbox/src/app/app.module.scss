@@ -1,1 +1,51 @@
 /* Your styles goes here. */
+$bg-color: #383852;
+
+.main {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  & > * {
+    border-bottom: 1px solid black;
+  }
+}
+
+.header {
+  height: 60px;
+  min-height: 0;
+  flex-shrink: 0;
+  background-color: $bg-color;
+}
+
+.content {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-shrink: 1;
+  border: 0;
+}
+.navigation {
+  width: 250px;
+  flex-shrink: 0;
+  min-width: 0;
+  background-color: $bg-color;
+  color: white;
+}
+
+.sandpack {
+  flex: 1;
+  flex-shrink: 1;
+  min-width: 0;
+  height: 100%;
+}
+
+.rightPanel {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  & > div {
+    flex: 1;
+  }
+}

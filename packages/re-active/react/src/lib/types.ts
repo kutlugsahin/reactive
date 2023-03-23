@@ -1,4 +1,4 @@
-import { Ref, UnwrapNestedRefs } from './reactivity';
+import { EffectScope, ReactiveEffectRunner, Ref, UnwrapNestedRefs } from './reactivity';
 import React, { Context, FC, ReactElement } from 'react';
 export type Dictionary = { [key: string]: any };
 export type Action = () => void;
@@ -31,3 +31,23 @@ export type ImperativeHandle = {
 };
 
 export type ComponentDefinition<P> = FC<UnwrapNestedRefs<ReactiveProps<P>>> | ReactiveComponentWithHandle<P, unknown>;
+export type UniversalRenderer = () => Renderer | RenderResult;
+
+
+export interface UniversalRenderState {
+  forceRender: () => void;
+  scope: EffectScope | null;
+  render: RenderResult | Renderer;
+  effectRunner: ReactiveEffectRunner<unknown> | null;
+  isEffectQueued: boolean;
+}
+
+export type ReactiveRenderResult =
+  | {
+      componentType: 'reactive';
+      renderResult: Renderer;
+    }
+  | {
+      componentType: 'functional';
+      renderResult: RenderResult;
+    };

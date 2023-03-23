@@ -8,6 +8,4 @@ body {
   font-smooth: always;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
-
-  --sp-border-radius: 0;
 }

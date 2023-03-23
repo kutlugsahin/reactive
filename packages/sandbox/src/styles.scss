@@ -1,18 +1,34 @@
 html,
-body {
+body,
+#root {
   margin: 0;
   padding: 0;
+  height: 100%;
+  overflow-y: hidden;
 }
 
 #root {
+  * {
+    box-sizing: border-box;
+  }
+
   .sp-layout,
   .sp-file-explorer,
   .sp-editor,
-  .sp-preview {
-    height: 100vh;
+  .sp-preset-column {
+    height: calc(100vh - 60px);
+  }
+
+  .sp-code-editor {
+    // font-size: 16px;
   }
 
   .sp-layout {
     border-radius: 0;
+  }
+
+  .preview-console {
+    display: flex;
+    flex-direction: column;
   }
 }

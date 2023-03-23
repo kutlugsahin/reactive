@@ -1,9 +1,9 @@
-import React from 'react';
 import { EffectScheduler } from './reactivity';
+import { UniversalRenderState } from './types';
 
 export const queueMicrotaskEffect: EffectScheduler = (
   callback: () => void,
-  isEffectQueued: React.MutableRefObject<boolean>,
+  state: UniversalRenderState,
   willRender?: () => void,
 ) => {
   let isRunning = false;
@@ -12,11 +12,11 @@ export const queueMicrotaskEffect: EffectScheduler = (
     if (!isRunning) {
       isRunning = true;
       willRender?.();
-      isEffectQueued.current = true;
+      state.isEffectQueued = true;
       queueMicrotask(() => {
         isRunning = false;
         callback();
-        isEffectQueued.current = false;
+        state.isEffectQueued = false;
       });
     }
   };
