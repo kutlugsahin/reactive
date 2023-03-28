@@ -6,7 +6,7 @@ import { UniversalRenderer, UniversalRenderState } from './types';
 
 export function renderUniversal(state: UniversalRenderState, renderer: UniversalRenderer, willRender?: () => void) {
   state.isEffectQueued = false;
-  let shouldRunEffect = true;
+  let isInSetupStep = false;
 
   if (!state.scope) {
     state.scope = effectScope();
@@ -16,8 +16,11 @@ export function renderUniversal(state: UniversalRenderState, renderer: Universal
         () => {
           const result = renderer();
 
+          /**
+           * renderer returns function meaning we are in setup phase
+           */
           if (typeof result === 'function') {
-            shouldRunEffect = false;
+            isInSetupStep = true;
           }
 
           state.render = result;
@@ -39,7 +42,10 @@ export function renderUniversal(state: UniversalRenderState, renderer: Universal
     state.effectRunner?.();
   }
 
-  if (shouldRunEffect) {
+  /**
+   * Don't run
+   */
+  if (isInSetupStep === false) {
     useEffect(() => {
       if (!state.scope) {
         state.forceRender();
@@ -51,7 +57,9 @@ export function renderUniversal(state: UniversalRenderState, renderer: Universal
       };
     }, [state]);
   } else {
-    state.scope?.stop();
+    // if renderer returns a function (renderer) which means reactive component
+    // stop the effect because we just needed the renderer function
+    state.effectRunner?.effect.stop();
     state.scope = null;
   }
 

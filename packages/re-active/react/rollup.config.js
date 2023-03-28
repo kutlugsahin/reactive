@@ -36,6 +36,12 @@ module.exports = {
           src: '../../../node_modules/@vue/reactivity/dist/reactivity.d.ts',
           dest: 'dist/types/packages/re-active/react/src/lib',
           rename: 'vue-reactivity.d.ts',
+          transform: (contents, filename) => {
+            return contents.toString().replace(
+              `import { IfAny } from '@vue/shared'`,
+              `export type IfAny<T, Y, N> = 0 extends 1 & T ? Y : N`
+            );
+          },
         },
         {
           src: './src/reactivity.d.ts',

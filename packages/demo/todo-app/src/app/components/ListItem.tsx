@@ -1,11 +1,11 @@
-import { createComponent, effect } from '@re-active/react';
+import { component, effect } from '@re-active/react';
 import { actions, TodoItem } from '../store';
 
 interface ListItemProps {
   todo: TodoItem;
 }
 
-export const ListItem = createComponent((props: ListItemProps) => {
+export const ListItem = component((props: ListItemProps) => {
   function getItemClass() {
     const classes = [];
 

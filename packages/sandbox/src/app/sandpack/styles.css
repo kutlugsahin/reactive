@@ -21,18 +21,16 @@ button {
   color: #fff;
   cursor: pointer;
   font-family: -apple-system, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Ubuntu, sans-serif;
-  font-size: 100%;
-  height: 44px;
+  font-size: 16px;
+  height: 36px;
   line-height: 1.15;
-  margin: 12px 0 0;
+  margin: 0 2px;
   outline: none;
   overflow: hidden;
   padding: 0 25px;
   position: relative;
   text-align: center;
-  text-transform: none;
-  transform: translateZ(0);
-  transition: all 0.2s, box-shadow 0.08s ease-in;
+  transition: all 0.2s, box-shadow 0.08s ease;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
@@ -43,10 +41,44 @@ button:focus {
     rgba(50, 151, 211, 0.3) 0 0 0 4px;
 }
 
+input[type="text"] {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  transition: border-color 0.2s ease, box-shadow .2s ease;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  /* border-color: #51598b; */
+  box-shadow: 0 0 5px 1px #9698a765
+}
+
 .card {
   margin: 10px;
   padding: 10px;
-  border-radius: 6px;
+  /* border-radius: 6px; */
   background-color: #f3f3f3;
   box-shadow: 1px 1px 10px 2px #ccc;
+  border: 1px solid #ccc;
+}
+
+.card legend {
+  color: rgb(71, 85, 100);
+}
+
+.flash {
+  animation: flash;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes flash {
+  0% {
+    background-color: #ffec83;
+  }
+  100% {
+    background-color: #f3f3f3;
+  }
 }

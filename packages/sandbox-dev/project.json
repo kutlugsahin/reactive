@@ -1,0 +1,72 @@
+{
+  "name": "sandbox-dev",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/sandbox-dev/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/packages/sandbox-dev"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/vite:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "sandbox-dev:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "sandbox-dev:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "sandbox-dev:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "preview": {
+      "executor": "@nrwl/vite:preview-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "sandbox-dev:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "sandbox-dev:build:development"
+        },
+        "production": {
+          "buildTarget": "sandbox-dev:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nrwl/vite:test",
+      "outputs": ["coverage/packages/sandbox-dev"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../coverage/packages/sandbox-dev"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/sandbox-dev/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  },
+  "tags": []
+}

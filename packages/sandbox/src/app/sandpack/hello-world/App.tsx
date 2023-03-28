@@ -1,6 +1,6 @@
-import { createComponent, ref } from '@re-active/react';
+import { component, ref } from '@re-active/react';
 
-export default createComponent(() => {
+export default component(() => {
   const count = ref(0);
 
   function increment() {

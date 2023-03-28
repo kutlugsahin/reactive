@@ -3,7 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import styles from './app.module.scss';
 import { Header } from './components/header';
 import { Navigation } from './components/navigation';
-import { store } from './components/store';
+import { store } from './store';
 import { Sandpack } from './sandpack';
 
 export default component(() => {

@@ -1,9 +1,8 @@
-export * from './lib/createComponent';
+export * from './lib/component';
 export * from './lib/effect';
 export { imperativeHandle, onMounted, onUnmounted } from './lib/lifecycles';
 export * from './lib/context';
-export * from './lib/observer';
-export * from './lib/component';
+export { ReactiveBoundary } from './lib/observer';
 export {
   ref,
   computed,

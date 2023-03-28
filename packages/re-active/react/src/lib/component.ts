@@ -9,18 +9,20 @@ import React, {
   useEffect,
   useImperativeHandle,
   useLayoutEffect,
-  useRef
+  useRef,
 } from 'react';
 import { beginRegisterLifecycles, endRegisterLifecycles } from './lifecycles';
-import { EffectScope, effectScope } from './reactivity';
+import { EffectScope, effectScope, UnwrapNestedRefs } from './reactivity';
 import { renderUniversal } from './renderUniversal';
 import {
   ComponentDefinition,
   ComponentState,
+  ReactiveComponent,
+  ReactiveComponentWithHandle,
   ReactiveProps,
   Renderer,
   RenderResult,
-  UniversalRenderState
+  UniversalRenderState,
 } from './types';
 import { useForceRender, useReactiveProps } from './utils';
 
@@ -150,11 +152,13 @@ function createComponentFunction<Props>(componentSetup: ComponentDefinition<Prop
   return FunctionalComponent;
 }
 
+export function component<Props>(componentSetup: FC<UnwrapNestedRefs<ReactiveProps<Props>>>): FC<ReactiveProps<Props>>;
+export function component<Props>(componentSetup: ReactiveComponent<Props>): FC<ReactiveProps<Props>>;
 export function component<Props>(componentSetup: ComponentDefinition<Props>): FC<ReactiveProps<Props>> {
   return memo(createComponentFunction(componentSetup));
 }
 
-component.withHandle = function <Props, Handle>(component: ComponentDefinition<Props>) {
+component.withHandle = function <Props, Handle>(component: ReactiveComponentWithHandle<Props, Handle>) {
   const functionalComponent = createComponentFunction(component);
   return memo(forwardRef<Handle, Props>(functionalComponent as React.ForwardRefRenderFunction<Handle, Props>));
 };

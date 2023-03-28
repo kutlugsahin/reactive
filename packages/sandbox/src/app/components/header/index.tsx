@@ -3,12 +3,12 @@ import styles from './styles.module.scss';
 import { BsGithub } from 'react-icons/bs';
 import { HiSun } from 'react-icons/hi';
 import { MdOutlineNightlightRound } from 'react-icons/md';
-import { store, toggleTheme } from '../store';
+import { store, toggleTheme } from '../../store';
 
 export const Header = component(() => {
   return (
     <div className={styles.header}>
-      <div className={styles.title}>Reactive</div>
+      <div className={styles.title}>Reactive Sandbox</div>
       <div className={styles.actions}>
         <button className={styles.item}>
           <BsGithub size={32} color={store.theme === 'dark' ? 'white' : 'black'} />

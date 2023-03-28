@@ -1,12 +1,13 @@
 import React from 'react';
 import { Tree } from './components/tree';
-import { createComponent } from '@re-active/react';
+
 import { values, actions } from './store';
 import { Item, Node } from './store/utils';
 import { Main } from './components/main';
 import { Details } from './components/details';
+import { component } from '@re-active/react';
 
-export default createComponent(() => {
+export default component(() => {
   function renderNode(node: Node<Item>) {
     return <span>{node.data.name}</span>;
   }

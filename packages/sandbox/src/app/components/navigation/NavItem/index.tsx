@@ -11,7 +11,7 @@ export const NavItem = component((props: PropsWithChildren<{ path: string }>) =>
 
     return (
       <div className={`${styles.navItem} ${isActive ? styles.active : ''}`} onClick={() => navigate(props.path)}>
-        {props.children}
+        <div>{props.children}</div>
       </div>
     );
   };

@@ -1,12 +1,11 @@
 import { autocompletion, completionKeymap } from '@codemirror/autocomplete';
 import {
   SandpackCodeEditor,
-  SandpackConsole,
-  SandpackFiles,
+  SandpackConsole, SandpackFiles,
   SandpackLayout,
   SandpackPreview,
   SandpackProvider,
-  useSandpack,
+  useSandpack
 } from '@codesandbox/sandpack-react';
 import { aquaBlue, freeCodeCampDark } from '@codesandbox/sandpack-themes';
 import { useEffect, useState } from 'react';
@@ -20,7 +19,9 @@ import styleCss from './styles.css?raw';
 
 import { component } from '@re-active/react';
 import styles from '../app.module.scss';
-import { store } from '../components/store';
+import { store } from '../store';
+
+import Card from './shared/card/index.tsx?raw';
 
 const defaultFiles: SandpackFiles = {
   '/styles.css': {
@@ -38,6 +39,9 @@ const defaultFiles: SandpackFiles = {
   '/sandpack-routes.ts': {
     code: routes,
     hidden: true,
+  },
+  '/shared/card/index.tsx': {
+    code: Card,
   },
 };
 
@@ -104,7 +108,7 @@ export const Sandpack = component(() => {
         dependencies: {
           react: '18.2.0',
           'react-dom': '18.2.0',
-          '@re-active/react': '1.1.2',
+          '@re-active/react': '1.1.5',
           'react-router-dom': '6.9.0',
           typescript: '4.9.5',
         },
@@ -120,11 +124,13 @@ export const Sandpack = component(() => {
     >
       <Dispatcher loaded={() => setIsLoaded(true)} />
       <SandpackLayout>
-        {/* <SandpackFileExplorer autoHiddenFiles/> */}
+        {/* <SandpackFileExplorer autoHiddenFiles /> */}
         <SandpackCodeEditor
-          style={{ fontSize: 16 }}
+          // style={{fontSize:16}}
           extensions={[autocompletion()]}
           extensionsKeymap={[...completionKeymap]}
+          showLineNumbers
+          initMode="immediate"
         />
         <div className={styles.rightPanel}>
           <div className={styles.preview}>

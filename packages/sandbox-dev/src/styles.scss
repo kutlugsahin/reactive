@@ -1,0 +1,92 @@
+/* You can add global styles to this file, and also import other style files */
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-y: hidden;
+}
+
+html {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+    'Helvetica Neue', sans-serif;
+}
+
+.appContainer {
+  background-color: white;
+  padding: 20px;
+  button {
+    appearance: button;
+    backface-visibility: hidden;
+    background-color: #405cf5;
+    border-radius: 6px;
+    border-width: 0;
+    box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset, rgba(50, 50, 93, 0.1) 0 2px 5px 0,
+      rgba(0, 0, 0, 0.07) 0 1px 1px 0;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-family: -apple-system, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Ubuntu, sans-serif;
+    font-size: 16px;
+    height: 36px;
+    line-height: 1.15;
+    margin: 0 2px;
+    outline: none;
+    overflow: hidden;
+    padding: 0 25px;
+    position: relative;
+    text-align: center;
+    transition: all 0.2s, box-shadow 0.08s ease;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+
+  button:focus {
+    box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset, rgba(50, 50, 93, 0.2) 0 6px 15px 0,
+      rgba(0, 0, 0, 0.1) 0 2px 2px 0, rgba(50, 151, 211, 0.3) 0 0 0 4px;
+  }
+
+  input[type='text'] {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  input[type='text']:focus {
+    outline: none;
+    /* border-color: #51598b; */
+    box-shadow: 0 0 5px 1px #9698a765;
+  }
+
+  .card {
+    margin: 10px;
+    padding: 10px;
+    /* border-radius: 6px; */
+    background-color: #f3f3f3;
+    box-shadow: 1px 1px 10px 2px #ccc;
+    border: 1px solid #ccc;
+  }
+
+  .card legend {
+    color: rgb(71, 85, 100);
+  }
+
+  .flash {
+    animation: flash;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+  }
+
+  @keyframes flash {
+    0% {
+      background-color: #ffec83;
+    }
+    100% {
+      background-color: #f3f3f3;
+    }
+  }
+}

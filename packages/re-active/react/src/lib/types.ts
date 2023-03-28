@@ -30,7 +30,7 @@ export type ImperativeHandle = {
   [key: string]: (...args: any[]) => any;
 };
 
-export type ComponentDefinition<P> = FC<UnwrapNestedRefs<ReactiveProps<P>>> | ReactiveComponentWithHandle<P, unknown>;
+export type ComponentDefinition<P> = FC<UnwrapNestedRefs<ReactiveProps<P>>> | ReactiveComponentWithHandle<P, any>;
 export type UniversalRenderer = () => Renderer | RenderResult;
 
 
@@ -41,13 +41,3 @@ export interface UniversalRenderState {
   effectRunner: ReactiveEffectRunner<unknown> | null;
   isEffectQueued: boolean;
 }
-
-export type ReactiveRenderResult =
-  | {
-      componentType: 'reactive';
-      renderResult: Renderer;
-    }
-  | {
-      componentType: 'functional';
-      renderResult: RenderResult;
-    };

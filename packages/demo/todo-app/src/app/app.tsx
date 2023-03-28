@@ -1,77 +1,28 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { component, createComponent, onMounted, onUnmounted, reactive, ref } from '@re-active/react';
-import { useEffect, useRef } from 'react';
+import { component, onMounted, onUnmounted } from '@re-active/react';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
 import { List } from './components/List';
 
-// export default createComponent(() => {
-//   onMounted(() => {
-//     console.log('mounted');
-//   });
-
-//   onUnmounted(() => {
-//     console.log('unmounted');
-//   });
-
-//   return () => {
-//     console.log('rendered');
-//     return (
-//       <section className="todoapp">
-//         <div>
-//           <Header/>
-//           <List />
-//           <Footer />
-//         </div>
-//       </section>
-//     );
-//   };
-// });
-
-const Child = (props: { count: number }) => {
-
-  useEffect(() => {
-    console.log('child mount');
-
-    return () => {
-      console.log('child unmount');
-    };
-  });
-
-  console.log('child render');
-
-  return (
-    <div>
-      {props.count}{' '}
-      <div>
-        {/* {state.current.count} <button onClick={() => state.current.count++}>inc</button> */}
-      </div>
-    </div>
-  );
-};
-
 export default component(() => {
-  const state = reactive({
-    count: 1,
+  onMounted(() => {
+    console.log('mounted');
   });
 
-  onMounted(() => {
-    console.log('parent mount');
-    return () => {
-      console.log('parent unmount');
-    };
-  })
+  onUnmounted(() => {
+    console.log('unmounted');
+  });
 
   return () => {
-    console.log('parent render');
+    console.log('rendered');
     return (
-      <div>
-        Parent
+      <section className="todoapp">
         <div>
-          {state.count} <button onClick={() => state.count++}>inc</button>
+          <Header />
+          <List />
+          <Footer />
         </div>
-        <Child count={state.count} />
-      </div>
-    )
-  }
+      </section>
+    );
+  };
 });

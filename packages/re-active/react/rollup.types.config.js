@@ -13,7 +13,9 @@ module.exports = [
           {
             src: 'dist/types/packages/re-active/react/src/lib/reactivity.d.ts',
             dest: 'dist/types/packages/re-active/react/src/lib',
-            transform: (contents, filename) => contents.toString().replace('@vue/reactivity', './vue-reactivity'),
+            transform: (contents, filename) => {
+              return contents.toString().replace('@vue/reactivity', './vue-reactivity');
+            },
           },
         ],
       }),

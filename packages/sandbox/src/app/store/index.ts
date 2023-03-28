@@ -3,7 +3,7 @@ import { effect, reactive } from '@re-active/react';
 export const store = reactive<{
   theme: 'light' | 'dark';
 }>({
-  theme: (localStorage.getItem('theme') as 'light' | 'dark') ?? 'light',
+  theme: (localStorage.getItem('theme') as 'light' | 'dark') ?? 'dark',
 });
 
 effect(() => {

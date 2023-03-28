@@ -23,10 +23,22 @@ function listenerEffect(fn: () => void, type: ListenerEffectType, options?: Omit
 
   if (currentComponentState) {
     let shouldRun = false;
+    let isMounted = false;
+
+    let effectCallback = () => { return;  };
+
+    const onMounted = () => {
+      isMounted = true;
+      shouldRun = true;
+      effectCallback = fn;
+      triggerEffect();
+    };
+
+    currentComponentState.mounts.push(onMounted);
 
     const triggerEffect = () => {
       if (shouldRun) {
-        effectRunner.effect.run();
+        effectRunner();
         shouldRun = false;
       }
     };
@@ -36,17 +48,22 @@ function listenerEffect(fn: () => void, type: ListenerEffectType, options?: Omit
 
     flushListener.push(triggerEffect);
 
-    const effectRunner = coreEffect(fn, {
-      ...options,
-      scheduler: () => {
-        shouldRun = true;
-        queueMicrotask(() => {
-          if (!currentComponentState.willRender) {
-            triggerEffect();
-          }
-        });
+    const effectRunner = coreEffect(
+      () => {
+        effectCallback();
       },
-    });
+      {
+        ...options,
+        scheduler: () => {
+          shouldRun = true;
+          queueMicrotask(() => {
+            if (!currentComponentState.willRender && isMounted) {
+              triggerEffect();
+            }
+          });
+        },
+      }
+    );
     return effectRunner.effect.stop;
   }
 

@@ -14,6 +14,6 @@ export function observer<P extends object>(
   });
 }
 
-export const Observer = memo((props: { children: () => RenderResult }) => {
+export const ReactiveBoundary = memo((props: { children: () => RenderResult }) => {
   return renderReactive(props.children);
 });
