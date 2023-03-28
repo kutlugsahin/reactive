@@ -1,10 +1,21 @@
+import { sandpackRoutes } from './sandpack/sandpack-routes';
+
 import helloWorldFiles from './sandpack/hello-world/files';
 import reactivityFiles from './sandpack/reactivity/files';
 import componentFiles from './sandpack/component/files';
 import propsFiles from './sandpack/props/files';
 import effectWatchFiles from './sandpack/effect-watch/files';
 
-export const routes = [
+type AppRoute<T> = T extends readonly (infer R)[] ? R : never;
+type RouteTypes = AppRoute<typeof sandpackRoutes>;
+type Files = { [key: string]: string };
+type Routes = {
+  route: RouteTypes['route'];
+  title: string;
+  files: Files;
+};
+
+export const routes: Routes[] = [
   {
     title: 'Hello World',
     route: '/hello-world',

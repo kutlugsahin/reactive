@@ -6,28 +6,23 @@ import effectWatch from './effect-watch/App';
 
 export const sandpackRoutes = [
   {
-    // title: 'Hello World',
-    route: 'hello-world',
+    route: '/hello-world',
     component: helloWorldApp,
   },
   {
-    // title: 'Reactivity',
     route: '/reactivity',
     component: reactivityApp,
   },
   {
-    // title: 'Component',
     route: '/component',
     component: componentApp,
   },
   {
-    // title: 'Props',
     route: '/props',
     component: propsApp,
   },
   {
-    // title: 'Effect watch',
     route: '/effect-watch',
     component: effectWatch,
   },
-];
+] as const;
