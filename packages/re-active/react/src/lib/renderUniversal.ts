@@ -3,6 +3,17 @@ import { useEffect } from 'react';
 import { effect, effectScope } from './reactivity';
 import { queueMicrotaskEffect } from './scheduler';
 import { UniversalRenderer, UniversalRenderState } from './types';
+import { useForceRender } from './utils';
+
+export function createUniversalState() {
+  return {
+    forceRender: useForceRender(),
+    effectRunner: null,
+    isEffectQueued: false,
+    render: null,
+    scope: null,
+  };
+}
 
 export function renderUniversal(state: UniversalRenderState, renderer: UniversalRenderer, willRender?: () => void) {
   state.isEffectQueued = false;
@@ -43,7 +54,7 @@ export function renderUniversal(state: UniversalRenderState, renderer: Universal
   }
 
   /**
-   * Don't run
+   * Don't run if this is for setup
    */
   if (isInSetupStep === false) {
     useEffect(() => {

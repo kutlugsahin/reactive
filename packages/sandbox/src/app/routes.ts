@@ -5,6 +5,7 @@ import reactivityFiles from './sandpack/reactivity/files';
 import componentFiles from './sandpack/component/files';
 import propsFiles from './sandpack/props/files';
 import effectWatchFiles from './sandpack/effect-watch/files';
+import reactiveBoundaryFiles from './sandpack/reactive-boundary/files';
 
 type AppRoute<T> = T extends readonly (infer R)[] ? R : never;
 type RouteTypes = AppRoute<typeof sandpackRoutes>;
@@ -40,5 +41,10 @@ export const routes: Routes[] = [
     title: 'Effect-watch',
     route: '/effect-watch',
     files: effectWatchFiles,
+  },
+  {
+    title: 'ReactiveBoundary',
+    route: '/reactive-boundary',
+    files: reactiveBoundaryFiles
   },
 ];

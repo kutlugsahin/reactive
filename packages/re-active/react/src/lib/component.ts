@@ -13,7 +13,7 @@ import React, {
 } from 'react';
 import { beginRegisterLifecycles, endRegisterLifecycles } from './lifecycles';
 import { EffectScope, effectScope, UnwrapNestedRefs } from './reactivity';
-import { renderUniversal } from './renderUniversal';
+import { createUniversalState, renderUniversal } from './renderUniversal';
 import {
   ComponentDefinition,
   ComponentState,
@@ -24,7 +24,7 @@ import {
   RenderResult,
   UniversalRenderState,
 } from './types';
-import { useForceRender, useReactiveProps } from './utils';
+import { useReactiveProps } from './utils';
 
 function createComponentFunction<Props>(componentSetup: ComponentDefinition<Props>): FC<ReactiveProps<Props>> {
   const FunctionalComponent: FC<ReactiveProps<Props>> = (props: ReactiveProps<Props>, ref: Ref<unknown>) => {
@@ -33,17 +33,10 @@ function createComponentFunction<Props>(componentSetup: ComponentDefinition<Prop
     const renderer = useRef<() => RenderResult>(null!);
     const setupScope = useRef<EffectScope | null>(null);
     const shouldTriggerMounts = useRef(false);
-    const forceRender = useForceRender();
     const isFunctionalComponent = useRef<boolean>(false);
     const functionalComponentRenderResult = useRef<RenderResult>(null);
 
-    const universalRenderState = useRef<UniversalRenderState>({
-      forceRender,
-      effectRunner: null,
-      isEffectQueued: false,
-      render: null,
-      scope: null,
-    });
+    const universalRenderState = useRef<UniversalRenderState>(createUniversalState());
 
     /**
      * componentSetup is in form of FC so we render as FC and return

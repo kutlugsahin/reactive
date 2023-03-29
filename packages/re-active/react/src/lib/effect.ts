@@ -5,12 +5,12 @@ import { Dispose } from './types';
 type ListenerEffectType = 'update' | 'layout';
 type EffectType = 'sync' | ListenerEffectType;
 type Cleanup = () => void;
+export type EffectCallback = () => void | Cleanup;
 
 export type EffectOptions = Pick<ReactiveEffectOptions, 'onTrack' | 'onTrigger'> & {
   type?: EffectType;
 };
 
-export type EffectCallback = () => void | Cleanup;
 
 function createEffect(fn: EffectCallback, options?: ReactiveEffectOptions): ReactiveEffectRunner<any> {
   let cleanup: Dispose;

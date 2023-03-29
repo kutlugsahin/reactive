@@ -10,9 +10,11 @@ export function renderReactive(renderer: () => RenderResult, willRender?: () => 
   const scope = useRef<EffectScope | null>(null);
   const render = useRef<RenderResult>(null);
   const effectRunner = useRef<ReactiveEffectRunner<unknown> | null>(null);
-  const isEffectQueued = useRef<boolean>(false);
+  const effectQueueState = useRef<{
+    isEffectQueued: boolean;
+  }>({ isEffectQueued: false });
 
-  isEffectQueued.current = false;
+  effectQueueState.current.isEffectQueued = false;
 
   if (!scope.current) {
     scope.current = effectScope();
@@ -23,11 +25,15 @@ export function renderReactive(renderer: () => RenderResult, willRender?: () => 
           render.current = renderer();
         },
         {
-          scheduler: queueMicrotaskEffect(() => {
-            if (isEffectQueued.current) {
-              forceRender();
-            }
-          }, isEffectQueued, willRender),
+          scheduler: queueMicrotaskEffect(
+            () => {
+              if (effectQueueState.current.isEffectQueued) {
+                forceRender();
+              }
+            },
+            effectQueueState.current,
+            willRender
+          ),
         }
       );
     });

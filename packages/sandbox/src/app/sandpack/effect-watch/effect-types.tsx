@@ -1,19 +1,17 @@
 import { component, reactive, updateEffect, effect, layoutEffect } from '@re-active/react';
+import { createRef } from 'react';
 
 export const EffectTypes = component(() => {
   const counters = reactive([0, 0, 0]);
-  const refs = Array<HTMLButtonElement | null>(3);
+
+  const buttonRefs = Array(3).fill(null).map(() => createRef<HTMLButtonElement>());
 
   function increment(index: number) {
     counters[index]++;
   }
 
-  function setRef(ref: HTMLButtonElement | null, index: number) {
-    refs[index] = ref;
-  }
-
   function getButtonText(index: number) {
-    return Number(refs[index]?.innerHTML);
+    return Number(buttonRefs[index].current?.innerHTML);
   }
 
   /**
@@ -41,13 +39,13 @@ export const EffectTypes = component(() => {
 
   return () => (
     <div>
-      <button ref={(ref) => setRef(ref, 0)} onClick={() => increment(0)}>
+      <button ref={buttonRefs[0]} onClick={() => increment(0)}>
         {counters[0]}
       </button>
-      <button ref={(ref) => setRef(ref, 1)} onClick={() => increment(1)}>
+      <button ref={buttonRefs[1]} onClick={() => increment(1)}>
         {counters[1]}
       </button>
-      <button ref={(ref) => setRef(ref, 2)} onClick={() => increment(2)}>
+      <button ref={buttonRefs[2]} onClick={() => increment(2)}>
         {counters[2]}
       </button>
     </div>

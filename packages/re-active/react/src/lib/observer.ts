@@ -1,19 +1,12 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { FC, memo, MemoExoticComponent } from 'react';
-import { UnwrapNestedRefs } from './reactivity';
-import { renderReactive } from './renderReactive';
-import { ReactiveProps, RenderResult } from './types';
-import { useReactiveProps } from './utils';
+import { FC, memo, useRef } from 'react';
+import { createUniversalState, renderUniversal } from './renderUniversal';
+import { RenderResult } from './types';
 
-export function observer<P extends object>(
-  component: FC<UnwrapNestedRefs<ReactiveProps<P>>>
-): MemoExoticComponent<FC<ReactiveProps<P>>> {
-  return memo((props: ReactiveProps<P>) => {
-    const reactiveProps = useReactiveProps<ReactiveProps<P>>(props);
-    return renderReactive(() => component(reactiveProps));
-  });
+type ReactiveBoundaryProps<T> = { data: T; children: (data: T) => RenderResult } | { children: () => RenderResult };
+
+function ReactiveBoundaryComponent<T>(props: { data: T; children: (data: T) => RenderResult }) {
+  return renderUniversal(useRef(createUniversalState()).current, () => props.children(props.data)) as RenderResult;
 }
 
-export const ReactiveBoundary = memo((props: { children: () => RenderResult }) => {
-  return renderReactive(props.children);
-});
+export const ReactiveBoundary = memo(ReactiveBoundaryComponent) as FC<ReactiveBoundaryProps<any>>;

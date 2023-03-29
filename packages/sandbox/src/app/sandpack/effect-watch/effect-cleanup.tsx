@@ -9,7 +9,11 @@ export const EffectCleanup = component(() => {
   updateEffect(() => {
     const { cancel, result } = fetchPerson(userId.value);
 
-    result.then((p) => (person.value = p));
+    result.then((p) => (person.value = p)).catch((err: DOMException) => {
+      if (err.name === 'AbortError') {
+        console.log('fetch aborted')
+      }
+    });
 
     return () => {
       cancel();

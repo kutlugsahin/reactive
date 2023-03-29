@@ -3,6 +3,7 @@ import reactivityApp from './reactivity/App';
 import componentApp from './component/App';
 import propsApp from './props/App';
 import effectWatch from './effect-watch/App';
+import reactiveBoundary from './reactive-boundary/App';
 
 export const sandpackRoutes = [
   {
@@ -24,5 +25,9 @@ export const sandpackRoutes = [
   {
     route: '/effect-watch',
     component: effectWatch,
+  },
+  {
+    route: '/reactive-boundary',
+    component: reactiveBoundary,
   },
 ] as const;

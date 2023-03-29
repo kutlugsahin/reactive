@@ -5,7 +5,7 @@ import FetchPerson from './fetch-person?raw';
 
 export default {
   '/effect-watch/App.tsx': App,
-  '/effect-watch/effect-cleanup.tsx': EffectCleanup,
   '/effect-watch/effect-types.tsx': EffectTypes,
+  '/effect-watch/effect-cleanup.tsx': EffectCleanup,
   '/effect-watch/fetch-person.ts': FetchPerson,
 };

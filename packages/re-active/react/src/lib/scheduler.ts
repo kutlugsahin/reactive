@@ -1,11 +1,14 @@
 import { EffectScheduler } from './reactivity';
-import { UniversalRenderState } from './types';
 
-export const queueMicrotaskEffect: EffectScheduler = (
+type IsEffectQueuedState = {
+  isEffectQueued: boolean;
+};
+
+export const queueMicrotaskEffect = (
   callback: () => void,
-  state: UniversalRenderState,
-  willRender?: () => void,
-) => {
+  state: IsEffectQueuedState,
+  willRender?: () => void
+): EffectScheduler => {
   let isRunning = false;
 
   return () => {
