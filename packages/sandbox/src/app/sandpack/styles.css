@@ -70,7 +70,7 @@ input[type="text"]:focus {
 
 .flash {
   animation: flash;
-  animation-duration: 1s;
+  animation-duration: 3s;
   animation-fill-mode: forwards;
 }
 

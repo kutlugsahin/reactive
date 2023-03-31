@@ -12,7 +12,7 @@ export const Card = (props: PropsWithChildren<{ title?: string, highlightOnRende
 
       t = setTimeout(() => {
         container.current?.classList.remove('flash');
-      }, 1000);
+      }, 3000);
     }
 
     return () => {

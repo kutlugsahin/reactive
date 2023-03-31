@@ -7,6 +7,7 @@
     "build:types": "cd ./packages/re-active/react && rollup -c rollup.types.config.js",
     "publish:lib": "cd ./packages/re-active/react && npm publish --access=public",
     "build:reactive": "npm run build:lib && npm run build:types && npm run build:types",
+    "build:publish": "npm run build:reactive && npm run publish:lib",
     "prod:browser-with-build": "nx build demo-browser-reactive && cd dist/packages/demo/browser/reactive && http-server .",
     "prod:browser": "cd dist/packages/demo/browser/reactive && http-server ."
   },

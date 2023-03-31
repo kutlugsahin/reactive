@@ -49,6 +49,10 @@
     min-height: 0;
   }
 
+  & > div:first-child {
+    flex: 2;
+  }
+
   .loading {
     display: flex;
     justify-content: center;
