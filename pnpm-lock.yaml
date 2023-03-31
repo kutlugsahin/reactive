@@ -37,7 +37,7 @@ specifiers:
   '@vitejs/plugin-react': ^3.0.0
   '@vitest/coverage-c8': ~0.25.8
   '@vitest/ui': ^0.25.8
-  '@vue/reactivity': 3.3.0-alpha.4
+  '@vue/reactivity': 3.3.0-alpha.6
   cross-env: 7.0.3
   cypress: ^12.2.0
   dts-bundle: 0.7.3
@@ -85,7 +85,7 @@ dependencies:
   '@codesandbox/sandpack-react': 2.1.9_biqbaboplfbrettd7655fr4n2y
   '@codesandbox/sandpack-themes': 2.0.21
   '@monaco-editor/react': 4.4.6_waewrrayshn643ztij6zbniufy
-  '@vue/reactivity': 3.3.0-alpha.4
+  '@vue/reactivity': 3.3.0-alpha.6
   mobx: 6.8.0
   mobx-react: 7.6.0_woojb62cqeyk443mbl7msrwu2e
   monaco-editor: 0.36.1
@@ -4114,14 +4114,14 @@ packages:
       sirv: 2.0.2
     dev: true
 
-  /@vue/reactivity/3.3.0-alpha.4:
-    resolution: {integrity: sha512-K6ZTW4elXB7D/8mxwT+IIkl30AL3vBrVOGjbAauXgbRPbTKy6ns3Raoj1oyS3qsMaYmK23mDppbh2G1d5WtCng==}
+  /@vue/reactivity/3.3.0-alpha.6:
+    resolution: {integrity: sha512-NI/lZX3ze//Llvaj0iU9Kf7RAD8gIJOmuqjoYH7JfF0FPVnShIYSvgXc9qUzIVBPoa9/55s/DuygUzCj6QtXzQ==}
     dependencies:
-      '@vue/shared': 3.3.0-alpha.4
+      '@vue/shared': 3.3.0-alpha.6
     dev: false
 
-  /@vue/shared/3.3.0-alpha.4:
-    resolution: {integrity: sha512-kVLnOWyM2IiggeHjLFPSM8BAbhaVtkAYKCz1+P6dRHz7ZWfzie96ev7c5XvTTCET+l/m4tUUVPlc6wSMybXlxw==}
+  /@vue/shared/3.3.0-alpha.6:
+    resolution: {integrity: sha512-KwK7FAXqzCgQHSJ+6NQOrnCQyu9LZ8JRudKULn2MZ0Jnn6EkrNYRqzbEs5nisPW4VK/nnt11uk4EFvbbSAIteQ==}
     dev: false
 
   /@webassemblyjs/ast/1.11.1:

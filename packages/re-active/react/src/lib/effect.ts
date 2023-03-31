@@ -1,5 +1,5 @@
 import { getCurrentComponentState } from './lifecycles';
-import { effect as coreEffect, ReactiveEffectOptions, ReactiveEffectRunner } from './reactivity';
+import { effect as coreEffect, enableTracking, pauseTracking, ReactiveEffectOptions, ReactiveEffectRunner } from './reactivity';
 import { Dispose } from './types';
 
 type ListenerEffectType = 'update' | 'layout';
@@ -91,3 +91,12 @@ export function updateEffect(fn: EffectCallback, options?: Omit<EffectOptions, '
 export function layoutEffect(fn: EffectCallback, options?: Omit<EffectOptions, 'type'>): Dispose {
   return listenerEffect(fn, 'layout', options);
 }
+
+export const untracked = <T>(fn: () => T) => {
+  try {
+    pauseTracking();
+    return fn();
+  } finally {
+    enableTracking();
+  }
+};

@@ -28,6 +28,8 @@ export {
   getCurrentScope,
   onScopeDispose,
   isShallow,
+  pauseTracking,
+  enableTracking,
 } from './lib/reactivity';
 export type { Dispose, OnMount, OnUnmount, ReactiveComponent } from './lib/types';
 export type {
@@ -43,7 +45,6 @@ export type {
   UnwrapNestedRefs,
   DeepReadonly,
   UnwrapRef,
-  UnwrapRefSimple,
   ToRef,
   ToRefs,
   ShallowRef,
