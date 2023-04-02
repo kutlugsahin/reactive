@@ -6,6 +6,7 @@ import effectWatch from './effect-watch/App';
 import reactiveBoundary from './reactive-boundary/App';
 import computed from './computed/App';
 import ref from './ref/App';
+import context from './context/App';
 
 export const sandpackRoutes = [
   {
@@ -39,5 +40,9 @@ export const sandpackRoutes = [
   {
     route: '/ref',
     component: ref,
+  },
+  {
+    route: '/context',
+    component: context,
   },
 ] as const;
