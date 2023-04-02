@@ -8,7 +8,11 @@ export type RenderResult = ReactElement<any, any> | null;
 export type Renderer = () => RenderResult;
 export type ReactiveProps<P> = { [key in keyof P]: P[key] | Ref<P[key]> };
 export type ReactiveComponent<P> = (props: UnwrapNestedRefs<ReactiveProps<P>>) => Renderer;
-export type ReactiveComponentWithHandle<P, H> = (props: UnwrapNestedRefs<ReactiveProps<P>>, ref: React.Ref<H>) => Renderer;
+export type ReactiveComponentWithHandle<P, H> = (
+  props: UnwrapNestedRefs<ReactiveProps<P>>,
+  ref: React.Ref<H>
+) => Renderer;
+
 export type ComponentState = {
   mounts: OnMount[];
   unMounts: OnUnmount[];
@@ -31,10 +35,9 @@ export type ImperativeHandle = {
 };
 
 export type ComponentDefinition<P> = FC<UnwrapNestedRefs<ReactiveProps<P>>> | ReactiveComponentWithHandle<P, any>;
-export type UniversalRenderer = () => Renderer | RenderResult;
+export type SetupOrRender = () => Renderer | RenderResult;
 
-
-export interface UniversalRenderState {
+export interface RenderComponentState {
   forceRender: () => void;
   scope: EffectScope | null;
   render: RenderResult | Renderer;

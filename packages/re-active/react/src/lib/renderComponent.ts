@@ -2,10 +2,10 @@
 import { useEffect } from 'react';
 import { effect, effectScope } from './reactivity';
 import { queueMicrotaskEffect } from './scheduler';
-import { UniversalRenderer, UniversalRenderState } from './types';
+import { SetupOrRender, RenderComponentState } from './types';
 import { useForceRender } from './utils';
 
-export function createUniversalState() {
+export function createRenderComponentState() {
   return {
     forceRender: useForceRender(),
     effectRunner: null,
@@ -15,7 +15,7 @@ export function createUniversalState() {
   };
 }
 
-export function renderUniversal(state: UniversalRenderState, renderer: UniversalRenderer, willRender?: () => void) {
+export function renderComponent(state: RenderComponentState, renderer: SetupOrRender, willRender?: () => void) {
   state.isEffectQueued = false;
   let isInSetupStep = false;
 

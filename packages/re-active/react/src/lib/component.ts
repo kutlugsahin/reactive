@@ -13,7 +13,7 @@ import React, {
 } from 'react';
 import { beginRegisterLifecycles, endRegisterLifecycles } from './lifecycles';
 import { EffectScope, effectScope, UnwrapNestedRefs } from './reactivity';
-import { createUniversalState, renderUniversal } from './renderUniversal';
+import { createRenderComponentState, renderComponent } from './renderComponent';
 import {
   ComponentDefinition,
   ComponentState,
@@ -22,7 +22,7 @@ import {
   ReactiveProps,
   Renderer,
   RenderResult,
-  UniversalRenderState,
+  RenderComponentState,
 } from './types';
 import { useReactiveProps } from './utils';
 
@@ -36,13 +36,13 @@ function createComponentFunction<Props>(componentSetup: ComponentDefinition<Prop
     const isFunctionalComponent = useRef<boolean>(false);
     const functionalComponentRenderResult = useRef<RenderResult>(null);
 
-    const universalRenderState = useRef<UniversalRenderState>(createUniversalState());
+    const universalRenderState = useRef<RenderComponentState>(createRenderComponentState());
 
     /**
      * componentSetup is in form of FC so we render as FC and return
      */
     if (isFunctionalComponent.current) {
-      return renderUniversal(universalRenderState.current, () => componentSetup(reactiveProps, ref)) as RenderResult;
+      return renderComponent(universalRenderState.current, () => componentSetup(reactiveProps, ref)) as RenderResult;
     }
 
     // run for first render
@@ -50,7 +50,7 @@ function createComponentFunction<Props>(componentSetup: ComponentDefinition<Prop
       setupScope.current = effectScope();
       setupScope.current.run(() => {
         state.current = beginRegisterLifecycles();
-        const setupResult = renderUniversal(universalRenderState.current, () => componentSetup(reactiveProps, ref));
+        const setupResult = renderComponent(universalRenderState.current, () => componentSetup(reactiveProps, ref));
         endRegisterLifecycles();
 
         if (typeof setupResult !== 'function') {
@@ -135,7 +135,7 @@ function createComponentFunction<Props>(componentSetup: ComponentDefinition<Prop
       state.current.layoutListeners.forEach((p) => p());
     });
 
-    return renderUniversal(universalRenderState.current, renderer.current, () => {
+    return renderComponent(universalRenderState.current, renderer.current, () => {
       state.current.willRender = true;
     }) as RenderResult;
   };

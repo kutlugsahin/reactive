@@ -2,7 +2,7 @@ export * from './lib/component';
 export * from './lib/effect';
 export { imperativeHandle, onMounted, onUnmounted } from './lib/lifecycles';
 export * from './lib/context';
-export { ReactiveBoundary } from './lib/observer';
+export { ReactiveBoundary } from './lib/reactiveBoundary';
 export {
   ref,
   computed,
