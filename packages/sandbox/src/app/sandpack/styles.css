@@ -46,6 +46,7 @@ input[type="text"] {
   border-radius: 5px;
   border: 1px solid #ccc;
   font-size: 16px;
+  background-color: white;
   transition: border-color 0.2s ease, box-shadow .2s ease;
 }
 

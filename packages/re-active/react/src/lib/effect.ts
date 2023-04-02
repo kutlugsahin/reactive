@@ -2,9 +2,9 @@ import { getCurrentComponentState } from './lifecycles';
 import { effect as coreEffect, enableTracking, pauseTracking, ReactiveEffectOptions, ReactiveEffectRunner } from './reactivity';
 import { Dispose } from './types';
 
-type ListenerEffectType = 'update' | 'layout';
-type EffectType = 'sync' | ListenerEffectType;
-type Cleanup = () => void;
+type ListenerEffectType = Exclude<EffectType, 'sync'>;
+export type EffectType = 'sync' | 'update' | 'layout';
+export type Cleanup = () => void;
 export type EffectCallback = () => void | Cleanup;
 
 export type EffectOptions = Pick<ReactiveEffectOptions, 'onTrack' | 'onTrigger'> & {

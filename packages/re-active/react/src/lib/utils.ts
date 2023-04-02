@@ -33,8 +33,8 @@ export function useReactiveProps<P extends object>(props: P): UnwrapNestedRefs<P
   return reactiveProps as UnwrapNestedRefs<P>;
 }
 
-export const isArray = Array.isArray;
-export const isObject = (val: any): val is Record<any, any> => val !== null && typeof val === 'object';
+const isArray = Array.isArray;
+const isObject = (val: any): val is Record<any, any> => val !== null && typeof val === 'object';
 
 export function traverse(value: any, seen: Set<any> = new Set()) {
   if (!isObject(value) || seen.has(value)) {

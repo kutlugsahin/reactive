@@ -1,4 +1,4 @@
-import { component, computed, effect, reactive } from '@re-active/react';
+import { component, computed, effect, reactive, ReactiveComponent } from '@re-active/react';
 import { Card } from '../shared/card';
 
 export default component(() => {

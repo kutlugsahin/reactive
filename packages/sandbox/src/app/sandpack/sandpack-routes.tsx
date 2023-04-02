@@ -5,6 +5,7 @@ import propsApp from './props/App';
 import effectWatch from './effect-watch/App';
 import reactiveBoundary from './reactive-boundary/App';
 import computed from './computed/App';
+import ref from './ref/App';
 
 export const sandpackRoutes = [
   {
@@ -34,5 +35,9 @@ export const sandpackRoutes = [
   {
     route: '/computed',
     component: computed,
+  },
+  {
+    route: '/ref',
+    component: ref,
   },
 ] as const;

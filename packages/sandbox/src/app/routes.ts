@@ -7,6 +7,7 @@ import propsFiles from './sandpack/props/files';
 import effectWatchFiles from './sandpack/effect-watch/files';
 import reactiveBoundaryFiles from './sandpack/reactive-boundary/files';
 import computedFiles from './sandpack/computed/files';
+import refFiles from './sandpack/ref/files';
 
 type AppRoute<T> = T extends readonly (infer R)[] ? R : never;
 type RouteTypes = AppRoute<typeof sandpackRoutes>;
@@ -52,5 +53,10 @@ export const routes: Routes[] = [
     title: 'computed',
     route: '/computed',
     files: computedFiles,
+  },
+  {
+    title: 'ref()',
+    route: '/ref',
+    files: refFiles,
   },
 ];
