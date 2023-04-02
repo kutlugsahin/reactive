@@ -10,7 +10,7 @@ const ContextWithRef = createContext(ref(0));
 const Consumer1 = component(() => {
   const context = consumeContext(ContextWithRef);
 
-  return () => <Card>{context.value}</Card>;
+  return () => <Card title='consumeContext()'>{context.value}</Card>;
 });
 
 /**
@@ -19,14 +19,14 @@ const Consumer1 = component(() => {
 const Consumer2 = component(() => {
   const context = useContext(ContextWithRef);
 
-  return <Card>{context.value}</Card>;
+  return <Card title='useContext'>{context.value}</Card>;
 });
 
 export default component(() => {
   const countRef = ref(0);
 
   return () => (
-    <Card>
+    <Card title='Provider component'>
       <ContextWithRef.Provider value={countRef}>
         <Consumer1 />
         <Consumer2 />
