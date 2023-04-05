@@ -3,17 +3,17 @@ import { component, reactive, ReactiveBoundary } from '@re-active/react';
 import { Card } from '../shared/card';
 
 const user = reactive({
-  name: 'John Doe',
+  name: 'John Doe12',
   skills: [
     {
-      name: 'js',
+      name: 'js11111',
     },
     {
       name: 'java',
     },
     {
       name: 'c++',
-    },
+    }
   ],
 });
 

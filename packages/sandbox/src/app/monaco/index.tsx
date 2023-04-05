@@ -1,7 +1,7 @@
 import Editor, { loader, Monaco } from '@monaco-editor/react';
 import { useActiveCode, SandpackStack, FileTabs, useSandpack } from '@codesandbox/sandpack-react';
 
-import { setupEditor } from './setup';
+import { setupEditor } from './setup/setup';
 
 import { store } from '../store';
 import { component } from '@re-active/react';

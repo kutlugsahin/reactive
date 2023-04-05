@@ -4,15 +4,14 @@ import { loadWASM } from 'onigasm';
 import { Registry } from 'monaco-textmate';
 import { wireTmGrammars } from 'monaco-editor-textmate';
 import typescriptReactTM from './TypeScriptReact.tmLanguage.json';
-import cssTM from './css.tmLanguage.json';
 
-import React from './react.d.ts?raw';
-import Reactive from './re-active.d.ts?raw';
-import Globals from './global.d.ts?raw';
-import JSXRUNTIME from './jsx-runtime.d.ts?raw';
+import React from './extra-lib/react.d.ts?raw';
+import Reactive from './extra-lib/re-active.d.ts?raw';
+import Globals from './extra-lib/global.d.ts?raw';
+import JSXRUNTIME from './extra-lib/jsx-runtime.d.ts?raw';
 import { Monaco } from '@monaco-editor/react';
-import Card from '../sandpack/shared/card/index.tsx?raw';
-import { addThemes } from './themes';
+import Card from '../../sandpack/shared/card/index.tsx?raw';
+import { addThemes } from '../themes';
 import onigasm from 'onigasm/lib/onigasm.wasm?url';
 
 export function setupEditor(monaco: Monaco) {
