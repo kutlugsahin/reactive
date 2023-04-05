@@ -1,0 +1,21 @@
+.group {
+  padding: 6px;
+}
+
+.title {
+  margin-bottom: 4px;
+  margin-left: 12px;
+  color: var(--text-color);
+  padding: 4px 0;
+  // border-bottom: 1px solid var(--group-border-color);
+  opacity: 1;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.content {
+  margin-bottom: 0px;
+  padding: 4px;
+  border-radius: 12px;
+  background-color: var(--group-bg-color);
+}

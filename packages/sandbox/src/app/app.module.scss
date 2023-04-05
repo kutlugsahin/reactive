@@ -13,12 +13,16 @@
     --bg-color: #e5e7eb;
     --text-color: #293e6c;
     --border-color: rgb(219, 219, 219);
+    --group-border-color: #2c6aa9;
+    --group-bg-color: #d4d4d8;
   }
 
   &.dark {
     --bg-color: #1f2937;
     --text-color: #f1f5f9;
     --border-color: rgb(6, 10, 14);
+    --group-border-color: #2c6aa9;
+    --group-bg-color: #374151;
   }
 }
 

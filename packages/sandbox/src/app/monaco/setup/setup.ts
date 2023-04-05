@@ -13,6 +13,7 @@ import { Monaco } from '@monaco-editor/react';
 import Card from '../../sandpack/shared/card/index.tsx?raw';
 import { addThemes } from '../themes';
 import onigasm from 'onigasm/lib/onigasm.wasm?url';
+import { routes } from '../../routes';
 
 export function setupEditor(monaco: Monaco) {
   // Tell monaco about the file from solid-js

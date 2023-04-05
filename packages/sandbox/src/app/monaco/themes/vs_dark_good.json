@@ -2,7 +2,7 @@
   "inherit": true,
   "base": "vs-dark",
   "colors": {
-    "editor.background": "#1f2937",
+    "editor.background": "#10141a",
     "editor.foreground": "#D4D4D4",
     "editor.inactiveSelectionBackground": "#3A3D41",
     "editorIndentGuide.background": "#404040",

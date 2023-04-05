@@ -8,6 +8,11 @@ body {
   font-smooth: always;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
+  padding: 0 10px;
+}
+
+html {
+  background-color: #f3f4f6;
 }
 
 button {
@@ -57,16 +62,18 @@ input[type="text"]:focus {
 }
 
 .card {
-  margin: 10px;
-  padding: 10px;
+  margin: 10px 4px;
+  padding: 20px;
   /* border-radius: 6px; */
-  background-color: #f3f3f3;
-  box-shadow: 1px 1px 10px 2px #ccc;
-  border: 1px solid #ccc;
+  background-color: #e4e4e7;
+  box-shadow: 1px 1px 10px 2px #b9b9b9;
+  border: 1px solid #d1d5db;
 }
 
 .card legend {
   color: rgb(71, 85, 100);
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .flash {
@@ -80,6 +87,6 @@ input[type="text"]:focus {
     background-color: #ffec83;
   }
   100% {
-    background-color: #f3f3f3;
+    background-color: #e4e4e7;
   }
 }

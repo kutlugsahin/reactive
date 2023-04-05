@@ -10,6 +10,8 @@ import * as monaco from 'monaco-editor';
 import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
 import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
 import { useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
+import { routes } from '../routes';
 
 window.MonacoEnvironment = {
   getWorker(_: any, label: any) {
@@ -24,21 +26,45 @@ window.MonacoEnvironment = {
 loader.config({ monaco });
 
 export const MonacoEditor = component(() => {
+  const location = useLocation();
   const { code, updateCode } = useActiveCode();
   const { sandpack } = useSandpack();
   const inited = useRef(false);
   const activeFile = useRef('');
+  const monacoRef = useRef<Monaco>();
+
+  useEffect(() => {
+    const path = location.pathname;
+
+    const files = routes.find((p) => p.route === path)?.files;
+    const visibleFiles = files ? Object.keys(files) : [];
+
+    if (monacoRef.current) {
+      visibleFiles.filter(p => p.indexOf('/App.tsx') === -1).forEach(file => {
+        const path = "file:///src/" + file.split('/')[2];
+
+        import(`../sandpack${file}?raw`).then(p => {
+          monacoRef.current!.languages.typescript.typescriptDefaults.addExtraLib(p.default, path);
+          monacoRef.current!.languages.typescript.javascriptDefaults.addExtraLib(p.default, path);
+        })
+      })
+
+    }
+
+  }, [location.pathname])
+
 
   function onBeforeMount(monaco: Monaco) {
     // compiler options
     !inited.current && setupEditor(monaco);
 
     inited.current = true;
+    monacoRef.current = monaco;
   }
 
   return (
     <SandpackStack style={{ height: '100%', margin: 0 }}>
-      <FileTabs />
+      {/* <FileTabs /> */}
       <div style={{ flex: 1 }}>
         <Editor
           width="100%"

@@ -1,45 +1,35 @@
-import { component, computed, effect, reactive, ReactiveComponent } from '@re-active/react';
+import { component, computed, watch, reactive, updateEffect } from '@re-active/react';
+
 import { Card } from '../shared/card';
 
 export default component(() => {
-  const shoppingCard = reactive([
-    {
-      name: 'milk',
-      amount: 0,
-      price: 1.25,
-    },
-    {
-      name: 'egg',
-      amount: 0,
-      price: 2.25,
-    },
-    {
-      name: 'bread',
-      amount: 0,
-      price: 0.9,
-    },
-  ]);
+
+  const shoppingCard = reactive(new Map([
+    ['milk', { amount: 0, price: 1.225 }],
+    ['egg', { amount: 0, price: 2.25, }],
+    ['bread', { amount: 0, price: 0.9, }],
+  ]));
 
   function addProduct(productName: string) {
     return () => {
-      const product = shoppingCard.find((p) => p.name === productName);
+      const product = shoppingCard.get(productName);
       if (product) product.amount++;
     };
   }
 
   function removeProduct(productName: string) {
     return () => {
-      const product = shoppingCard.find((p) => p.name === productName);
+      const product = shoppingCard.get(productName);
       if (product && product.amount > 0) product.amount--;
     };
   }
 
   const total = computed(() => {
-    return shoppingCard.reduce((acc, product) => acc + product.amount * product.price, 0);
+    return [...shoppingCard.values()].reduce((acc, product) => acc + product.amount * product.price, 0);
   });
 
-  effect(() => {
-    if (total.value > 20) {
+  watch(total, (newVal, oldVal = 0) => {
+    if (newVal > 20 && newVal > oldVal) {
       alert('Out of budget!');
     }
   });
@@ -49,17 +39,17 @@ export default component(() => {
       <div style={{ display: 'flex' }}>
         <Card title="Milk">
           <button onClick={removeProduct('milk')}>-</button>
-          {shoppingCard[0].amount}
+          {shoppingCard.get('milk')?.amount}
           <button onClick={addProduct('milk')}>+</button>
         </Card>
         <Card title="Egg">
           <button onClick={removeProduct('egg')}>-</button>
-          {shoppingCard[1].amount}
+          {shoppingCard.get('egg')?.amount}
           <button onClick={addProduct('egg')}>+</button>
         </Card>
         <Card title="Bread">
           <button onClick={removeProduct('bread')}>-</button>
-          {shoppingCard[2].amount}
+          {shoppingCard.get('bread')?.amount}
           <button onClick={addProduct('bread')}>+</button>
         </Card>
       </div>

@@ -100,6 +100,11 @@ export const Sandpack = component(() => {
 
   const files = appRoutes.find((p) => p.route === path)?.files;
   const visibleFiles = files ? Object.keys(files) : [];
+  const [showTerminal, setShowTerminal] = useState(true);
+
+  function toggleTerminal() {
+    setShowTerminal(p => !p);
+  }
 
   return (
     <SandpackProvider
@@ -136,14 +141,14 @@ export const Sandpack = component(() => {
         <MonacoEditor/>
         <div className={styles.rightPanel}>
           <div className={styles.preview}>
-            <SandpackPreview />
+            <SandpackPreview actionsChildren={<button className='consoleToggle' onClick={toggleTerminal}>toggle terminal</button>}/>
             {!isLoaded && (
               <div className={styles.loading}>
                 <span>Loading...</span>
               </div>
             )}
           </div>
-          <SandpackConsole title="Console" />
+          {showTerminal && <SandpackConsole />}
         </div>
       </SandpackLayout>
     </SandpackProvider>
