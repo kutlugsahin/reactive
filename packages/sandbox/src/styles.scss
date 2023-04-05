@@ -29,11 +29,16 @@ html {
 
   .sp-layout {
     border-radius: 0;
+    border: none;
   }
 
   .preview-console {
     display: flex;
     flex-direction: column;
+  }
+
+  .sp-console, .sp-tabs {
+    background-color: var(--bg-color);
   }
 }
 

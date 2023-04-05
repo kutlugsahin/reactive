@@ -10,9 +10,9 @@ export const Header = component(() => {
     <div className={styles.header}>
       <div className={styles.title}>Reactive Sandbox</div>
       <div className={styles.actions}>
-        <select onChange={p => store.editorTheme = p.target.value}>
+        {/* <select onChange={p => store.editorTheme = p.target.value}>
           {store.themes.map(p => <option value={p}>{p}</option>)}
-        </select>
+        </select> */}
         <button className={styles.item}>
           <BsGithub size={32} color={store.theme === 'dark' ? 'white' : 'black'} />
         </button>

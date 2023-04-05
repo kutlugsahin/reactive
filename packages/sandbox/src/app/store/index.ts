@@ -18,3 +18,7 @@ effect(() => {
 export function toggleTheme() {
   store.theme = store.theme === 'dark' ? 'light' : 'dark';
 }
+
+effect(() => {
+  store.editorTheme = store.theme === 'dark' ? 'vs-dark-plus' : 'vs-light-plus'
+})

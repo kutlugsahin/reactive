@@ -109,7 +109,7 @@ export const Sandpack = component(() => {
         dependencies: {
           react: '18.2.0',
           'react-dom': '18.2.0',
-          '@re-active/react': '1.1.10',
+          '@re-active/react': '1.1.11',
           'react-router-dom': '6.9.0',
           typescript: '4.9.5',
         },

@@ -10,14 +10,14 @@
   }
 
   &.light {
-    --bg-color: #ededee;
+    --bg-color: #e5e7eb;
     --text-color: #293e6c;
     --border-color: rgb(219, 219, 219);
   }
 
   &.dark {
-    --bg-color: #383852;
-    --text-color: white;
+    --bg-color: #1f2937;
+    --text-color: #f1f5f9;
     --border-color: rgb(6, 10, 14);
   }
 }

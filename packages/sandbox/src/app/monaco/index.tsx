@@ -59,7 +59,7 @@ export const MonacoEditor = component(() => {
           // onMount={onMount}
           options={{
             'semanticHighlighting.enabled': true,
-            fontSize: 15
+            fontSize: 15,
           }}
         />
       </div>
