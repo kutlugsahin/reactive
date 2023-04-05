@@ -9,7 +9,7 @@ import { component } from '@re-active/react';
 import * as monaco from 'monaco-editor';
 import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
 import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 window.MonacoEnvironment = {
   getWorker(_: any, label: any) {
@@ -27,6 +27,7 @@ export const MonacoEditor = component(() => {
   const { code, updateCode } = useActiveCode();
   const { sandpack } = useSandpack();
   const inited = useRef(false);
+  const activeFile = useRef('');
 
   function onBeforeMount(monaco: Monaco) {
     // compiler options
@@ -44,10 +45,16 @@ export const MonacoEditor = component(() => {
           height="100%"
           language="typescript"
           theme={store.editorTheme}
-          key={sandpack.activeFile}
-          defaultValue={code}
+          // key={sandpack.activeFile}
+          value={code}
           path={"file:///src/App.tsx"}
-          onChange={(value) => value !== code && updateCode(value || '')}
+          onChange={(value) => {
+            if (sandpack.activeFile !== activeFile.current) {
+              activeFile.current = sandpack.activeFile;
+            } else {
+              updateCode(value || '')
+            }
+          }}
           beforeMount={onBeforeMount}
           // onMount={onMount}
           options={{
