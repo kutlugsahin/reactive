@@ -1,4 +1,5 @@
 import { component, ref } from '@re-active/react';
+import React from 'react';
 
 export default component(() => {
   const count = ref(0);

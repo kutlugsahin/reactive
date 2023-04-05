@@ -19,7 +19,7 @@ const Consumer1 = component(() => {
 const Consumer2 = component(() => {
   const context = useContext(ContextWithRef);
 
-  return <Card title='useContext'>{context.value}</Card>;
+  return <Card title='useContext()'>{context.value}</Card>;
 });
 
 export default component(() => {

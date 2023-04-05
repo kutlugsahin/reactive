@@ -22,6 +22,7 @@ import styles from '../app.module.scss';
 import { store } from '../store';
 
 import Card from './shared/card/index.tsx?raw';
+import { MonacoEditor } from '../monaco';
 
 const defaultFiles: SandpackFiles = {
   '/styles.css': {
@@ -125,13 +126,14 @@ export const Sandpack = component(() => {
       <Dispatcher loaded={() => setIsLoaded(true)} />
       <SandpackLayout>
         {/* <SandpackFileExplorer autoHiddenFiles /> */}
-        <SandpackCodeEditor
+        {/* <SandpackCodeEditor
           // style={{fontSize:16}}
           extensions={[autocompletion()]}
           extensionsKeymap={[...completionKeymap]}
           showLineNumbers
           initMode="immediate"
-        />
+        /> */}
+        <MonacoEditor/>
         <div className={styles.rightPanel}>
           <div className={styles.preview}>
             <SandpackPreview />

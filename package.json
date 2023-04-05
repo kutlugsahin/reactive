@@ -76,6 +76,8 @@
     "vitest": "^0.25.8"
   },
   "dependencies": {
+    "@babel/parser": "7.21.4",
+    "@babel/traverse": "7.21.4",
     "@codemirror/autocomplete": "6.4.2",
     "@codesandbox/sandpack-react": "2.1.9",
     "@codesandbox/sandpack-themes": "2.0.21",
@@ -84,6 +86,12 @@
     "mobx": "6.8.0",
     "mobx-react": "7.6.0",
     "monaco-editor": "0.36.1",
+    "monaco-editor-textmate": "4.0.0",
+    "monaco-jsx-highlighter": "2.0.4",
+    "monaco-jsx-syntax-highlight": "1.2.0",
+    "monaco-textmate": "3.0.1",
+    "monaco-themes": "0.4.4",
+    "onigasm": "2.2.5",
     "puppeteer": "19.7.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",

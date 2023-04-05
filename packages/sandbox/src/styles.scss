@@ -36,3 +36,12 @@ html {
     flex-direction: column;
   }
 }
+
+[class^="codicon-"], [class*="codicon-"] {
+        font-family: "codicon"!important;
+ }
+
+ @font-face {
+    font-family: "codicon";
+    src: url(/codicon.ttf) format("truetype");
+}
