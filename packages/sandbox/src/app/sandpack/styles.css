@@ -64,7 +64,7 @@ input[type="text"]:focus {
 .card {
   margin: 10px 4px;
   padding: 20px;
-  /* border-radius: 6px; */
+  border-radius: 12px;
   background-color: #e4e4e7;
   box-shadow: 1px 1px 10px 2px #b9b9b9;
   border: 1px solid #d1d5db;

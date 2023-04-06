@@ -10,7 +10,7 @@ export default component(() => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route key="home" path="/" element={<Navigate replace to={'/hello-world'} />} />
+        <Route key="home" path="/" element={<Navigate replace to={'/component'} />} />
       </Routes>
       <div className={`${styles.main} ${store.theme === 'light' ? styles.light : styles.dark}`}>
         <Header />

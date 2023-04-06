@@ -5,10 +5,11 @@ import {
   SandpackLayout,
   SandpackPreview,
   SandpackProvider,
-  useSandpack
+  useSandpack,
+  useSandpackConsole
 } from '@codesandbox/sandpack-react';
 import { aquaBlue, freeCodeCampDark } from '@codesandbox/sandpack-themes';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { routes as appRoutes } from '../routes';
 
@@ -23,6 +24,7 @@ import { store } from '../store';
 
 import Card from './shared/card/index.tsx?raw';
 import { MonacoEditor } from '../monaco';
+import { SandpackConsoleRef } from '@codesandbox/sandpack-react/components/Console/SandpackConsole';
 
 const defaultFiles: SandpackFiles = {
   '/styles.css': {
@@ -106,6 +108,16 @@ export const Sandpack = component(() => {
     setShowTerminal(p => !p);
   }
 
+  useEffect(() => {
+    console.current?.reset();
+  }, [path]);
+
+  useEffect(() => {
+    console.current?.reset();
+  }, [isLoaded])
+
+  const console = useRef<SandpackConsoleRef>(null);
+
   return (
     <SandpackProvider
       template="react-ts"
@@ -114,7 +126,7 @@ export const Sandpack = component(() => {
         dependencies: {
           react: '18.2.0',
           'react-dom': '18.2.0',
-          '@re-active/react': '1.1.11',
+          '@re-active/react': '1.1.12',
           'react-router-dom': '6.9.0',
           typescript: '4.9.5',
         },
@@ -148,7 +160,7 @@ export const Sandpack = component(() => {
               </div>
             )}
           </div>
-          {showTerminal && <SandpackConsole />}
+          {showTerminal && <SandpackConsole showSyntaxError={false} ref={console}/>}
         </div>
       </SandpackLayout>
     </SandpackProvider>

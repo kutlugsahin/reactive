@@ -26,32 +26,31 @@ window.MonacoEnvironment = {
 loader.config({ monaco });
 
 export const MonacoEditor = component(() => {
-  const location = useLocation();
+  // const location = useLocation();
   const { code, updateCode } = useActiveCode();
   const { sandpack } = useSandpack();
   const inited = useRef(false);
   const activeFile = useRef('');
   const monacoRef = useRef<Monaco>();
 
-  useEffect(() => {
-    const path = location.pathname;
+  // useEffect(() => {
+  //   const path = location.pathname;
 
-    const files = routes.find((p) => p.route === path)?.files;
-    const visibleFiles = files ? Object.keys(files) : [];
+  //   const files = routes.find((p) => p.route === path)?.files;
+  //   const visibleFiles = files ? Object.keys(files) : [];
 
-    if (monacoRef.current) {
-      visibleFiles.filter(p => p.indexOf('/App.tsx') === -1).forEach(file => {
-        const path = "file:///src/" + file.split('/')[2];
+  //   if (monacoRef.current) {
+  //     visibleFiles.filter(p => p.indexOf('/App.tsx') === -1).forEach(file => {
+  //       const path = "file:///src/" + file.split('/')[2];
 
-        import(`../sandpack${file}?raw`).then(p => {
-          monacoRef.current!.languages.typescript.typescriptDefaults.addExtraLib(p.default, path);
-          monacoRef.current!.languages.typescript.javascriptDefaults.addExtraLib(p.default, path);
-        })
-      })
+  //       import(`../sandpack${file}?raw`).then(p => {
+  //         monacoRef.current!.languages.typescript.typescriptDefaults.addExtraLib(p.default, path);
+  //         monacoRef.current!.languages.typescript.javascriptDefaults.addExtraLib(p.default, path);
+  //       })
+  //     })
+  //   }
 
-    }
-
-  }, [location.pathname])
+  // }, [location.pathname])
 
 
   function onBeforeMount(monaco: Monaco) {

@@ -30,7 +30,7 @@ export default () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route key="home" path="/" element={<Navigate replace to={'/hello-world'} />} />
+        <Route key="home" path="/" element={<Navigate replace to={'/component'} />} />
         {sandpackRoutes.map((route) => {
           return <Route key={route.route} path={route.route} Component={route.component} />;
         })}

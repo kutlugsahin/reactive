@@ -18,6 +18,12 @@
     cursor: pointer;
     background: none;
     border: none;
+    color: var(--text-color);
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    font-size: 18px;
+    gap: 8px;
 
     &:hover{
       opacity: 1;

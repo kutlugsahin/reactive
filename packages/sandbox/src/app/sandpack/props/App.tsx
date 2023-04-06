@@ -1,32 +1,40 @@
-import { component, onMounted, ref, updateEffect } from '@re-active/react';
+import { component, ref, updateEffect } from '@re-active/react';
+import { Card } from '../shared/card';
 
 interface ChildProps {
   name: string;
 }
-
+/**
+ * When setting the properties of a reactive component,
+ * each prop type T will be exposed as T or Ref<T>.
+ * Notice "name" prop of Child is declared as string,
+ * Parent can pass name as both 'string' and 'Ref<string>'
+ */
 const Child = component((props: ChildProps) => {
+
+  /**
+   * "props" object is also reactive
+   */
   updateEffect(() => {
-    console.log(`Props are reactive: ${props.name}`);
-  });
+    console.log(`New name = ${props.name}`)
+  })
 
-  onMounted(() => {
-    console.log('child mounted');
-  });
-
-  return () => <div>Welcome {props.name}</div>;
+  return () => <Card title='Child'>Welcome {props.name}</Card>;
 });
 
-export default component(() => {
+const Parent = component(() => {
   const name = ref('john');
 
-  onMounted(() => {
-    console.log('parent mounted');
-  });
+  function onInputChange(value: string) {
+    name.value = value;
+  }
 
   return () => (
-    <div>
+    <Card title='Parent'>
+      Name: <input type="text" value={name.value} onChange={(e) => onInputChange(e.target.value)} />
       <Child name={name} />
-      <input type="text" value={name.value} onChange={(e) => (name.value = e.target.value)} />
-    </div>
+    </Card>
   );
 });
+
+export default Parent;

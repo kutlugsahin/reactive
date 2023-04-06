@@ -1,14 +1,16 @@
 import { sandpackRoutes } from './sandpack/sandpack-routes';
 
-import helloWorldFiles from './sandpack/hello-world/files';
 import reactivityFiles from './sandpack/reactivity/files';
 import componentFiles from './sandpack/component/files';
+import functionalComponentFiles from './sandpack/functional-component/files';
 import propsFiles from './sandpack/props/files';
 import effectWatchFiles from './sandpack/effect-watch/files';
 import reactiveBoundaryFiles from './sandpack/reactive-boundary/files';
 import computedFiles from './sandpack/computed/files';
 import refFiles from './sandpack/ref/files';
 import contextFiles from './sandpack/context/files';
+import lifecycleFiles from './sandpack/lifecycles/files';
+import withHandle from './sandpack/with-handle/files';
 
 type AppRoute<T> = T extends readonly (infer R)[] ? R : never;
 type RouteTypes = AppRoute<typeof sandpackRoutes>;
@@ -22,21 +24,21 @@ type Routes = {
 
 export const routes: Routes[] = [
   {
-    title: 'Hello World',
-    route: '/hello-world',
-    files: helloWorldFiles,
-    group: 'Component',
-  },
-  {
     title: 'Reactivity',
     route: '/reactivity',
     files: reactivityFiles,
     group: 'Reactivity',
   },
   {
-    title: 'Component',
+    title: 'component()',
     route: '/component',
     files: componentFiles,
+    group: 'Component',
+  },
+  {
+    title: 'component() - functional',
+    route: '/functional-component',
+    files: functionalComponentFiles,
     group: 'Component',
   },
   {
@@ -74,5 +76,17 @@ export const routes: Routes[] = [
     route: '/context',
     files: contextFiles,
     group: 'Context',
+  },
+  {
+    title: 'Lifecycles',
+    route: '/lifecycles',
+    files: lifecycleFiles,
+    group: 'Component',
+  },
+  {
+    title: 'Ref forwarding',
+    route: '/with-handle',
+    files: withHandle,
+    group: 'Component',
   },
 ];

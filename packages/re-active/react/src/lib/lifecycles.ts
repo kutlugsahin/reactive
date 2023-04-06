@@ -51,7 +51,7 @@ export function onUnmounted(onUnmounted: OnUnmount) {
   }
 }
 
-export function imperativeHandle<T extends ImperativeHandle>(handle: T) {
+export function imperativeHandle<T extends {}>(handle: T) {
   if (currentComponentState) {
     currentComponentState.imperativeHandle = handle;
   }

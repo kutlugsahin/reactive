@@ -16,7 +16,7 @@ export default component(() => {
           <Navigation />
           <div className={`${styles.sandpack} appContainer`}>
             <Routes>
-              <Route key="home" path="/" element={<Navigate replace to={'/hello-world'} />} />
+              <Route key="home" path="/" element={<Navigate replace to={'/component'} />} />
               {sandpackRoutes.map((route, index) => {
                 return <Route path={route.route} key={route.route} Component={route.component} />;
               })}
