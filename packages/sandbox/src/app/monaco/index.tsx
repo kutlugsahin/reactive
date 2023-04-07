@@ -1,17 +1,15 @@
+import { SandpackStack, useActiveCode, useSandpack } from '@codesandbox/sandpack-react';
 import Editor, { loader, Monaco } from '@monaco-editor/react';
-import { useActiveCode, SandpackStack, FileTabs, useSandpack } from '@codesandbox/sandpack-react';
 
 import { setupEditor } from './setup/setup';
 
-import { store } from '../store';
 import { component } from '@re-active/react';
+import { store } from '../store';
 
 import * as monaco from 'monaco-editor';
 import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
 import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
-import { useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
-import { routes } from '../routes';
+import { useRef } from 'react';
 
 window.MonacoEnvironment = {
   getWorker(_: any, label: any) {
