@@ -6,14 +6,14 @@ import { wireTmGrammars } from 'monaco-editor-textmate';
 import typescriptReactTM from './TypeScriptReact.tmLanguage.json';
 
 import React from './extra-lib/react.d.ts?raw';
-import Reactive from './extra-lib/re-active.d.ts?raw';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import Reactive from 'packages/re-active/react/dist/re-active.d.ts?raw';
 import Globals from './extra-lib/global.d.ts?raw';
 import JSXRUNTIME from './extra-lib/jsx-runtime.d.ts?raw';
 import { Monaco } from '@monaco-editor/react';
 import Card from '../../sandpack/shared/card/index.tsx?raw';
 import { addThemes } from '../themes';
 import onigasm from 'onigasm/lib/onigasm.wasm?url';
-import { routes } from '../../routes';
 
 export function setupEditor(monaco: Monaco) {
   // Tell monaco about the file from solid-js

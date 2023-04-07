@@ -1,7 +1,7 @@
 import { component, reactive, updateEffect, effect, layoutEffect } from '@re-active/react';
 import { createRef } from 'react';
 
-export const EffectTypes = component(() => {
+const EffectTypes = component(() => {
   const counters = reactive([0, 0, 0]);
 
   const buttonRefs = Array(3).fill(null).map(() => createRef<HTMLButtonElement>());
@@ -32,6 +32,7 @@ export const EffectTypes = component(() => {
 
   /**
    * effect runs sync
+   * so the counter[2] value will be updated before the dom is updated
    */
   effect(() => {
     console.log(`effect() Counter 2 value !== text in button => ${counters[2] !== getButtonText(2)}`);
@@ -51,3 +52,6 @@ export const EffectTypes = component(() => {
     </div>
   );
 });
+
+
+export default EffectTypes;

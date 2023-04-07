@@ -1,20 +1,16 @@
-import reactivityApp from './reactivity/App';
 import componentApp from './component/App';
 import functionalComponent from './functional-component/App';
 import propsApp from './props/App';
-import effectWatch from './effect-watch/App';
 import reactiveBoundary from './reactive-boundary/App';
 import computed from './computed/App';
 import ref from './ref/App';
 import context from './context/App';
 import lifecycles from './lifecycles/App';
 import withHandle from './with-handle/App';
+import effect from './effect/App';
+import effectCleanup from './effect-cleanup/App';
 
 export const sandpackRoutes = [
-  {
-    route: '/reactivity',
-    component: reactivityApp,
-  },
   {
     route: '/component',
     component: componentApp,
@@ -25,10 +21,6 @@ export const sandpackRoutes = [
   {
     route: '/props',
     component: propsApp,
-  },
-  {
-    route: '/effect-watch',
-    component: effectWatch,
   },
   {
     route: '/reactive-boundary',
@@ -52,5 +44,11 @@ export const sandpackRoutes = [
   }, {
     route: '/with-handle',
     component: withHandle,
+  }, {
+    route: '/effect',
+    component: effect,
+  }, {
+    route: '/effect-cleanup',
+    component: effectCleanup,
   },
 ] as const;

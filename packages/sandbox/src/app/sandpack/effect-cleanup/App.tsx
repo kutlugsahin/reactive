@@ -1,6 +1,25 @@
 import { component, ref, updateEffect } from '@re-active/react';
 import { Card } from '../shared/card';
-import { fetchPerson, Person } from './fetch-person';
+
+export interface Person {
+  name: string;
+  height: string;
+  gender: string;
+}
+
+export function fetchPerson(id: number) {
+  const abortController = new AbortController();
+  const result: Promise<Person> = fetch(`https://swapi.dev/api/people/${id}`, { signal: abortController.signal }).then(
+    (p) => p.json()
+  );
+
+  return {
+    result,
+    cancel() {
+      abortController.abort();
+    },
+  };
+}
 
 export const EffectCleanup = component(() => {
   const userId = ref(1);
@@ -15,6 +34,9 @@ export const EffectCleanup = component(() => {
       }
     });
 
+    /**
+     * An optional function can be returned for cleanup things / cancel calls etc.
+     */
     return () => {
       cancel();
     };
@@ -25,7 +47,17 @@ export const EffectCleanup = component(() => {
 
     return (
       <Card title="effect cleanup">
-        {name} {gender} {height}
+        <Card title='Person'>
+          <div>
+            Name: {name}
+          </div>
+          <div>
+            Gender: {gender}
+          </div>
+          <div>
+            Height: {height}
+          </div>
+        </Card>
         <div>
           <button onClick={() => userId.value--}>prev</button>
           <button onClick={() => userId.value++}>next</button>
@@ -34,3 +66,5 @@ export const EffectCleanup = component(() => {
     );
   };
 });
+
+export default EffectCleanup;
