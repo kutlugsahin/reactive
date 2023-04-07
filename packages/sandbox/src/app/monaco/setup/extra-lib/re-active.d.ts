@@ -1,4 +1,5 @@
 import React, { ReactElement, FC, Context } from 'react';
+import { UnwrapRef as UnwrapRef$1 } from '@vue/reactivity';
 
 type IfAny<T, Y, N> = 0 extends 1 & T ? Y : N;
 type UnwrapNestedRefs<T> = T extends Ref ? T : UnwrapRefSimple<T>;
@@ -249,9 +250,6 @@ type ReactiveProps<P> = {
 type ReactiveComponent<P> = (props: UnwrapNestedRefs<ReactiveProps<P>>) => Renderer;
 type ReactiveComponentWithHandle<P, H> = (props: UnwrapNestedRefs<ReactiveProps<P>>, ref: React.Ref<H>) => Renderer;
 type Dispose = () => void;
-type ImperativeHandle = {
-    [key: string]: (...args: any[]) => any;
-};
 
 declare function component<Props>(componentSetup: FC<UnwrapNestedRefs<ReactiveProps<Props>>>): FC<ReactiveProps<Props>>;
 declare function component<Props>(componentSetup: ReactiveComponent<Props>): FC<ReactiveProps<Props>>;
@@ -272,13 +270,13 @@ declare const untracked: <T>(fn: () => T) => T;
 
 declare function onMounted(onMount: OnMount): void;
 declare function onUnmounted(onUnmounted: OnUnmount): void;
-declare function imperativeHandle<T extends ImperativeHandle>(handle: T): void;
+declare function imperativeHandle<T extends {}>(handle: T): void;
 
 declare function consumeContext<T>(context: Context<T>): ShallowRef<UnwrapRef<T>>;
 
 type ReactiveBoundaryProps<T> = {
     data: T;
-    children: (data: T) => RenderResult;
+    children: (data: UnwrapRef$1<T>) => RenderResult;
 } | {
     children: () => RenderResult;
 };
