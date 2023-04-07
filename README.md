@@ -8,4 +8,4 @@ A reactive approach to create React application. Built on top of a reactivity sy
 
 See [Reactive framework documentation](https://kutlugsahin.gitbook.io/re-active/).
 
-See [Examples sandbox](https://codesandbox.io/s/re-active-i0ybq?file=/src/App.js).
+See [Examples sandbox](https://reactive-flax.vercel.app/).
