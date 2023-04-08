@@ -20,11 +20,7 @@ export type WatchSource = (() => unknown) | Ref<unknown> | object;
 export function watch<T>(source: Ref<T>, clb: WatchCallback<T>, options?: WatchOptions): Dispose;
 export function watch<T>(source: () => T, clb: WatchCallback<T>, options?: WatchOptions): Dispose;
 export function watch<T extends object>(source: T, clb: WatchCallback<T>, options?: WatchOptions): Dispose;
-export function watch<T extends WatchSource>(
-  source: T,
-  clb: WatchCallback<unknown>,
-  options?: WatchOptions
-): Dispose {
+export function watch<T extends WatchSource>(source: T, clb: WatchCallback<unknown>, options?: WatchOptions): Dispose {
   let oldValue: unknown;
   let shouldRun = options?.immediate || false;
   let deep = options?.deep;

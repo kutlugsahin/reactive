@@ -9,6 +9,8 @@ import lifecycles from './lifecycles/App';
 import withHandle from './with-handle/App';
 import effect from './effect/App';
 import effectCleanup from './effect-cleanup/App';
+import reactive from './reactive/App';
+import watch from './watch/App';
 
 export const sandpackRoutes = [
   {
@@ -50,5 +52,11 @@ export const sandpackRoutes = [
   }, {
     route: '/effect-cleanup',
     component: effectCleanup,
+  }, {
+    route: '/reactive',
+    component: reactive,
+  }, {
+    route: '/watch',
+    component: watch,
   },
 ] as const;

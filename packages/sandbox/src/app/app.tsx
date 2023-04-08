@@ -11,16 +11,18 @@ export default component(() => {
     <BrowserRouter>
       <Routes>
         <Route key="home" path="/" element={<Navigate replace to={'/component'} />} />
-      </Routes>
-      <div className={`${styles.main} ${store.theme === 'light' ? styles.light : styles.dark}`}>
-        <Header />
-        <div className={styles.content}>
-          <Navigation />
-          <div className={styles.sandpack}>
-            <Sandpack />
+        <Route path='*' element={
+          <div className={`${styles.main} ${store.theme === 'light' ? styles.light : styles.dark}`}>
+            <Header />
+            <div className={styles.content}>
+              <Navigation />
+              <div className={styles.sandpack}>
+                <Sandpack />
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        } />
+      </Routes>
     </BrowserRouter>
   );
 });

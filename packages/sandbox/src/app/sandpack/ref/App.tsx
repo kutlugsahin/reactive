@@ -16,15 +16,11 @@ const mapRef = ref(new Map());
 /**
  * ref makes the object deeply reactive
  */
-const jobApplicant = ref({
-  name: 'john',
-  references: [
-    {
-      name: 'kutlu',
-      email: 'kutlu@reactive.io',
-    },
-  ],
-  skills: new Set(['js', 'c#', 'java']),
+const nestedObject = ref({
+  foo: 'foo',
+  bar: [{
+    baz: 0
+  }]
 });
 
 effect(() => {
@@ -46,9 +42,9 @@ effect(() => {
   console.log([...mapRef.value]);
 });
 
-/** prints the reference emails of the applicant */
+/** prints the value in a nested array */
 effect(() => {
-  console.log(jobApplicant.value.references.map((p) => p.email));
+  console.log(nestedObject.value.bar[0].baz);
 });
 
 export default component(() => {

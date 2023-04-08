@@ -11,6 +11,8 @@ import lifecycleFiles from './sandpack/lifecycles/files';
 import withHandle from './sandpack/with-handle/files';
 import effect from './sandpack/effect/files';
 import effectCleanup from './sandpack/effect-cleanup/files';
+import reactive from './sandpack/reactive/files';
+import watch from './sandpack/watch/files';
 
 type AppRoute<T> = T extends readonly (infer R)[] ? R : never;
 type RouteTypes = AppRoute<typeof sandpackRoutes>;
@@ -72,6 +74,12 @@ export const routes: Routes[] = [
     group: 'Reactivity',
   },
   {
+    title: 'reactive()',
+    route: '/reactive',
+    files: reactive,
+    group: 'Reactivity',
+  },
+  {
     title: 'computed()',
     route: '/computed',
     files: computedFiles,
@@ -87,6 +95,12 @@ export const routes: Routes[] = [
     title: 'effect() - cleanup',
     route: '/effect-cleanup',
     files: effectCleanup,
+    group: 'Reactivity',
+  },
+  {
+    title: 'watch()',
+    route: '/watch',
+    files: watch,
     group: 'Reactivity',
   },
 ];
