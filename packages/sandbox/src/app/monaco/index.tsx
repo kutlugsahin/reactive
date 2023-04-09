@@ -9,7 +9,7 @@ import { store } from '../store';
 import * as monaco from 'monaco-editor';
 import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
 import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 window.MonacoEnvironment = {
   getWorker(_: any, label: any) {
@@ -31,6 +31,8 @@ export const MonacoEditor = component(() => {
   const activeFile = useRef('');
   const monacoRef = useRef<Monaco>();
 
+  const [editorCode, setEditorCode] = useState(code);
+
   // useEffect(() => {
   //   const path = location.pathname;
 
@@ -49,6 +51,27 @@ export const MonacoEditor = component(() => {
   //   }
 
   // }, [location.pathname])
+  useEffect(() => {
+    setEditorCode(code);
+  }, [code, setEditorCode])
+
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (sandpack.activeFile !== activeFile.current) {
+        activeFile.current = sandpack.activeFile;
+      } else {
+        if (code !== editorCode) {
+          updateCode(editorCode || '')
+        }
+      }
+    }, 500)
+
+
+    return () => {
+      clearTimeout(timer);
+    }
+  }, [editorCode, updateCode, sandpack.activeFile, code])
 
 
   function onBeforeMount(monaco: Monaco) {
@@ -69,14 +92,11 @@ export const MonacoEditor = component(() => {
           language="typescript"
           theme={store.editorTheme}
           // key={sandpack.activeFile}
-          value={code}
+          value={editorCode}
           path={"file:///src/App.tsx"}
           onChange={(value) => {
-            if (sandpack.activeFile !== activeFile.current) {
-              activeFile.current = sandpack.activeFile;
-            } else {
-              updateCode(value || '')
-            }
+            setEditorCode(value || '');
+
           }}
           beforeMount={onBeforeMount}
           // onMount={onMount}
