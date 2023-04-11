@@ -206,11 +206,19 @@ h2 {
 }
 
 @media only screen and (max-device-width: 480px){
+  body {
+    padding: 10px;
+  }
+
   .columns {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     margin: 84px 0;
     gap: 42px;
+  }
+
+  .code-block {
+    flex-direction: column;
   }
 }

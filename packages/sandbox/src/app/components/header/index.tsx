@@ -10,7 +10,7 @@ export const Header = component(() => {
   return (
     <div className={styles.header}>
       <div className={styles.title}>
-        <img className={styles.logo} src="reactive_logo_dark_bg.svg" alt="" />
+        <img className={styles.logo} src={store.theme === 'dark' ? 'reactive_logo_dark_bg.svg' : 'reactive_logo_white_bg.svg'} alt="" />
       </div>
       <div className={styles.actions}>
         {/* <select onChange={p => store.editorTheme = p.target.value}>
