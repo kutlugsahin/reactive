@@ -1,4 +1,5 @@
-![alt text](./media/reactive-logo-m.png)
+![alt text](./media/reactive_logo_dark_bg.svg#gh-light-mode-only)
+![alt text](./media/reactive_logo_dark_bg.svg#gh-dark-mode-only)
 
 A reactive approach to create React application. Built on top of a reactivity system for making concise and high performant applications.
 
