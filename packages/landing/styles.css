@@ -2,4 +2,200 @@ html,
 body {
   background-color: black;
   color: white;
+  font-family: 'Nunito Sans', sans-serif;
+  margin: 0;
+  padding: 0;
+  /* background: rgb(0,84,177); */
+  background: linear-gradient(to right bottom, #313843, #161c24, #0d1117);
+  box-sizing: border-box;
+}
+
+header,
+main {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  padding-top: 12px;
+}
+
+header .actions {
+  display: flex;
+  gap: 24px;
+  margin-left: auto;
+}
+
+header .actions a {
+  text-decoration: none;
+  color: white;
+  vertical-align: middle;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 16px;
+  opacity: .7;
+  transition: opacity .3s ease;
+}
+
+header .actions a:hover {
+  opacity: 1;
+}
+
+header .actions img {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+footer {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+footer img {
+  width: 40px;
+  opacity: 0.7;
+  transition: opacity .3s ease;
+}
+
+.sub-title {
+  display: flex;
+  align-items: center;
+}
+
+.inline-logo {
+  width: 24px !important;
+  height: 24px !important;
+  margin: 0 4px;
+}
+
+footer img:hover {
+  opacity: 1;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+}
+
+.brand img {
+  width: 680px;
+}
+
+
+.code-block {
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.code-block > * {
+  flex:1;
+  min-width: 630px;
+}
+
+.code-block > .def {
+  padding: 6px 0 0 20px;
+  font-size: 22px;
+}
+
+.code-block > .def:first-child {
+  padding: 6px 20px 0 0;
+}
+
+.gr-button {
+  padding: 12px 36px;
+  border-radius: 12px;
+  border: 1px solid #161c24;
+  /* box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0.493); */
+  font-family: inherit;
+  font-size: 18px;
+  color: white;
+  background: linear-gradient(146deg, rgb(223, 132, 6) 0%, rgb(140, 42, 170) 60%, rgb(92, 2, 165) 100%);
+  cursor: pointer;
+}
+
+.gr-button:hover {
+   box-shadow: 0px 0px 10px 0 rgba(114, 114, 114, 0.493);
+}
+
+.install {
+  border: 1px solid #161c24;
+  padding: 12px;
+  border-radius: 6px;
+  box-shadow: inset 0 0 3px 0 #3d4450;
+  display: inline-flex;
+  align-self: center;
+  background-color: #121212;
+  font-family: monospace;
+  font-size: 18px;
+  gap: 12px;
+  align-items: center;
+  cursor: pointer;
+  color: inherit;
+}
+
+.install:hover {
+  background-color: #212423;
+}
+
+.install:active {
+  background-color: #147e2f;
+}
+
+.install img {
+  width: 24px;
+  height: 24px;
+}
+
+.columns {
+  display: flex;
+  margin-top: 36px;
+  gap: 24px;
+}
+
+.col {
+  flex: 1;
+  font-size: 18px;
+}
+
+h2 {
+  margin-bottom: 12px;
+}
+
+.col img {
+  width: 32px;
+  height: 32px;
+  float: left;
+  margin-right: 10px;
+}
+
+.col h3 {
+  margin-top: 0;
+}
+
+.col p {
+  margin: 0;
+}
+
+.bullets {
+  color: #f1f1f1;
+  margin-top: 24px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin: 24px;
 }

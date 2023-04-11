@@ -9,7 +9,8 @@
     "build:reactive": "npm run build:lib && npm run build:types && npm run build:types",
     "build:publish": "npm run build:reactive && npm run publish:lib",
     "prod:browser-with-build": "nx build demo-browser-reactive && cd dist/packages/demo/browser/reactive && http-server .",
-    "prod:browser": "cd dist/packages/demo/browser/reactive && http-server ."
+    "prod:browser": "cd dist/packages/demo/browser/reactive && http-server .",
+    "landing": "cd packages/landing && http-server"
   },
   "private": true,
   "devDependencies": {
@@ -82,6 +83,7 @@
     "@codesandbox/sandpack-react": "2.1.9",
     "@codesandbox/sandpack-themes": "2.0.21",
     "@monaco-editor/react": "4.4.6",
+    "@nrwl/next": "15.9.2",
     "@vue/reactivity": "3.3.0-alpha.6",
     "mobx": "6.8.0",
     "mobx-react": "7.6.0",

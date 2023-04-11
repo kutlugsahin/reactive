@@ -1,8 +1,84 @@
 <html>
   <head>
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    Hello world
+    <header>
+      <div class="actions">
+        <a href="https://github.com/kutlugsahin/reactive"><img src="assets/images/github.svg" alt="" />Github</a>
+        <a href="https://kutlugsahin.gitbook.io/re-active/"><img src="assets/images/docs.svg" alt="" />Docs</a>
+        <a href="https://reactive-flax.vercel.app/"><img src="assets/images/code.svg" alt="" />Sandbox</a>
+      </div>
+    </header>
+    <main>
+      <div class="brand">
+        <img src="assets/images/reactive_logo_dark_bg.svg" alt="" />
+        <div class="sub-title">
+          Supercharge react.js <img class="inline-logo" src="assets/images/react.svg" alt="" /> with reactivity
+        </div>
+        <div class="bullets">✔ Performant ✔ Composable ✔ Concise ✔ Powerful proxy based reactivity</div>
+      </div>
+      <button id="npm-cmd" class="install">
+        npm i @re-active/react
+        <img src="assets/images/copy.svg" alt="" />
+      </button>
+      <div class="columns">
+        <div class="col">
+          <img src="assets/images/rabbit.svg" alt="" />
+          <h3>Performant</h3>
+          <p>
+            Create components bound to reactive data which only renders when necessary. No more redundant re-renders!
+            This also provides a better debugging experience.
+          </p>
+        </div>
+        <div class="col">
+          <img src="assets/images/package.svg" alt="" />
+          <h3>Local component state with closures</h3>
+          <p>
+            Reactive component definition creates a closure that will be created only one time which makes it perfect
+            place to define state, callbacks or any kind of local variable to be used in the renderer. No need for
+            dependency arrays, useMemo, useCallback etc.
+          </p>
+        </div>
+        <div class="col">
+          <img src="assets/images/rabbit.svg" alt="" />
+          <h3>Performant</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum nam dolorem autem rerum, fuga porro
+            laborum totam? Fugit ut libero veniam, amet suscipit laboriosam aliquid pariatur ullam, iusto itaque
+            temporibus!
+          </p>
+        </div>
+      </div>
+      <div class="code-block">
+        <div>
+          <img src="assets/images/counter.svg" alt="" />
+        </div>
+        <div class="def">
+          <h2>Reactive components</h2>
+          <p>
+            Reactive aims to provide concise, intuitive way of writing react applications with high performance,
+            embracing a reactivity system and mutations. By taking advantage of reactivity, it also introduces a new way
+            of creating functional components addressing many of the mental complexity brought by functional components
+            with hooks api.
+          </p>
+        </div>
+      </div>
+      <div class="action-buttons">
+        <a class="gr-button" href="https://reactive-flax.vercel.app/">Sandbox</a>
+        <a class="gr-button" href="https://kutlugsahin.gitbook.io/re-active/">Docs</a>
+      </div>
+    </main>
+    <footer>
+      <img src="assets/images/react.svg" alt="" />
+      <img src="assets/images/typescript.svg" alt="" />
+      <img title="@vue/reactivity" src="assets/images/vue.svg" alt="" />
+    </footer>
+    <script>
+      document.getElementById('npm-cmd').addEventListener('click', () => {
+        navigator.clipboard.writeText('npm i @re-active/react');
+      });
+    </script>
   </body>
 </html>
