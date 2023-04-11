@@ -36,8 +36,8 @@ header .actions a {
   align-items: center;
   gap: 4px;
   font-size: 16px;
-  opacity: .7;
-  transition: opacity .3s ease;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
 }
 
 header .actions a:hover {
@@ -59,7 +59,7 @@ footer {
 footer img {
   width: 40px;
   opacity: 0.7;
-  transition: opacity .3s ease;
+  transition: opacity 0.3s ease;
 }
 
 .sub-title {
@@ -89,22 +89,21 @@ footer img:hover {
   width: 680px;
 }
 
-
 .code-block {
   border-radius: 12px;
   overflow: hidden;
   display: flex;
   flex-wrap: wrap;
+  background: linear-gradient(45deg, #9832cf, #802cfc);
 }
 
 .code-block > * {
-  flex:1;
-  min-width: 630px;
+  flex: 1;
 }
 
 .code-block > .def {
-  padding: 6px 0 0 20px;
-  font-size: 22px;
+  padding: 6px 41px 20px 20px;
+  font-size: 20px;
 }
 
 .code-block > .def:first-child {
@@ -119,12 +118,16 @@ footer img:hover {
   font-family: inherit;
   font-size: 18px;
   color: white;
-  background: linear-gradient(146deg, rgb(223, 132, 6) 0%, rgb(140, 42, 170) 60%, rgb(92, 2, 165) 100%);
+  background: linear-gradient(146deg, rgb(239 114 31) 0%, rgb(243 174 52) 100%);
   cursor: pointer;
 }
 
+.gr-2 {
+  background: linear-gradient(146deg, rgb(239 114 31) 0%, rgb(243 174 52) 100%);
+}
+
 .gr-button:hover {
-   box-shadow: 0px 0px 10px 0 rgba(114, 114, 114, 0.493);
+  box-shadow: 0px 0px 10px 0 rgba(114, 114, 114, 0.493);
 }
 
 .install {
@@ -158,8 +161,9 @@ footer img:hover {
 
 .columns {
   display: flex;
-  margin-top: 36px;
-  gap: 24px;
+  flex-wrap: wrap;
+  margin: 84px 0;
+  gap: 42px;
 }
 
 .col {
@@ -184,6 +188,7 @@ h2 {
 
 .col p {
   margin: 0;
+  color: #d1d1d1;
 }
 
 .bullets {
@@ -197,5 +202,15 @@ h2 {
   display: flex;
   justify-content: center;
   gap: 24px;
-  margin: 24px;
+  margin: 48px 0;
+}
+
+@media only screen and (max-device-width: 480px){
+  .columns {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: 84px 0;
+    gap: 42px;
+  }
 }
