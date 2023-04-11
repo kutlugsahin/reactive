@@ -3,8 +3,8 @@ import { component, computed, reactive, ref, watch } from '@re-active/react';
 const Watch = component(() => {
   const count = ref(0);
   const user = reactive({
-    name: 'kutlu',
-    lastname: 'sahin',
+    name: 'John',
+    lastname: 'Doe',
     age: 30
   })
 
