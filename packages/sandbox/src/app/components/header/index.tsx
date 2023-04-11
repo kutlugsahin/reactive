@@ -9,7 +9,9 @@ import { HiDocumentText } from 'react-icons/hi';
 export const Header = component(() => {
   return (
     <div className={styles.header}>
-      <div className={styles.title}>Reactive Sandbox</div>
+      <div className={styles.title}>
+        <img className={styles.logo} src="reactive_logo_dark_bg.svg" alt="" />
+      </div>
       <div className={styles.actions}>
         {/* <select onChange={p => store.editorTheme = p.target.value}>
           {store.themes.map(p => <option value={p}>{p}</option>)}
