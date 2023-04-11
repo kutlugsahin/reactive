@@ -8,6 +8,7 @@ body {
   /* background: rgb(0,84,177); */
   background: linear-gradient(to right bottom, #313843, #161c24, #0d1117);
   box-sizing: border-box;
+  background-attachment: fixed;
 }
 
 header,
