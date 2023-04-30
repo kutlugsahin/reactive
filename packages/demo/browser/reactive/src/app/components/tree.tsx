@@ -1,5 +1,5 @@
 import React from 'react';
-import { createComponent, onUpdated } from '@re-active/react';
+import { component } from '@re-active/react';
 import { Node } from '../store/utils';
 // =============== TYPES ============================
 export interface TreeProps<T> {
@@ -18,7 +18,7 @@ interface TreeNodeProps<T = any> {
 }
 // =================================================
 
-export const Tree = createComponent((props: TreeProps<any>) => {
+export const Tree = component((props: TreeProps<any>) => {
   return () => {
     // console.log(`tree render`);
     return (
@@ -38,7 +38,7 @@ export const Tree = createComponent((props: TreeProps<any>) => {
   };
 });
 
-export const TreeNode = createComponent((props: TreeNodeProps) => {
+export const TreeNode = component((props: TreeNodeProps) => {
   function onNodeExpand(e: React.MouseEvent) {
     e.stopPropagation();
     props.onExpand(props.node);
@@ -76,7 +76,7 @@ export const TreeNode = createComponent((props: TreeNodeProps) => {
       onClick(node);
     }
 
-    function dblclick(e) {
+    function dblclick(e:any) {
       onNodeExpand(e);
     }
 

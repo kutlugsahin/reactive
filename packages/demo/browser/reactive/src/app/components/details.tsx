@@ -1,11 +1,11 @@
-import { createComponent } from '@re-active/react';
+import { component } from '@re-active/react';
 import { actions, values } from '../store';
 import { Item } from '../store/utils';
 import React from 'react';
 
-export const Details = createComponent(function Details() {
+export const Details = component(function Details() {
   return () => {
-    let item = values.editingItem;
+    const item = values.editingItem;
 
     if (!item) {
       return <p>Select an item</p>;
@@ -27,10 +27,10 @@ export const Details = createComponent(function Details() {
 interface FieldProps {
   label: string;
   item: Item;
-  path: string;
+  path: keyof Item;
 }
 
-export const Field = createComponent((props: FieldProps) => {
+export const Field = component((props: FieldProps) => {
   return () => {
     return (
       <div className="field">

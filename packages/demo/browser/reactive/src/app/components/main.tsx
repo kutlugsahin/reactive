@@ -1,9 +1,9 @@
-import { createComponent } from '@re-active/react';
+import { component } from '@re-active/react';
 import React from 'react';
 import { actions, values } from '../store';
 import { RowItem } from '../store/utils';
 
-export const Main = createComponent(() => {
+export const Main = component(() => {
   return () => {
     return (
       <div className="maincontainer">
@@ -20,7 +20,7 @@ export const Main = createComponent(() => {
   };
 });
 
-export const Table = createComponent(() => {
+export const Table = component(() => {
   function onKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
     if (e.key === 'Enter') {
       actions.gotoParentFolder();
@@ -61,7 +61,7 @@ interface RowProps {
   item: RowItem;
 }
 
-export const Row = createComponent((props: RowProps) => {
+export const Row = component((props: RowProps) => {
   let row: HTMLTableRowElement | null;
 
   // onRendered(() => {
