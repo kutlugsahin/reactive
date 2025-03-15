@@ -10,21 +10,14 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": [
-      "es2017",
-      "dom"
-    ],
+    "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@re-active/react": [
-        "packages/re-active/react/src/index.ts"
-      ]
+      "@re-active/oop": ["packages/re-active/oop/src/index.ts"],
+      "@re-active/react": ["packages/re-active/react/src/index.ts"]
     }
   },
-  "exclude": [
-    "node_modules",
-    "tmp"
-  ]
+  "exclude": ["node_modules", "tmp"]
 }

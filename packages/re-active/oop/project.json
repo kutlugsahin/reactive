@@ -1,0 +1,34 @@
+{
+  "name": "re-active-oop",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/re-active/oop/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/packages/re-active/oop",
+        "main": "packages/re-active/oop/src/index.ts",
+        "tsConfig": "packages/re-active/oop/tsconfig.lib.json",
+        "assets": [
+          "packages/re-active/oop/*.md"
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "packages/re-active/oop/**/*.ts"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

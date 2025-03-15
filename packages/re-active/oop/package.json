@@ -1,0 +1,30 @@
+{
+  "name": "@re-active/oop",
+  "version": "1.1.13",
+  "main": "dist/cjs/index.js",
+  "module": "dist/es/index.js",
+  "files": [
+    "dist/cjs",
+    "dist/es",
+    "dist/umd",
+    "README.md"
+  ],
+  "types": "dist/index.d.ts",
+  "author": {
+    "email": "kutlugsahin@gmail.com",
+    "name": "Kutlu Sahin"
+  },
+  "homepage": "https://kutlugsahin.gitbook.io/re-active/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kutlugsahin/reactive.git",
+    "directory": "packages/re-active/oop"
+  },
+  "keywords": [
+    "reactive",
+    "reactivity",
+    "react"
+  ],
+  "license": "ISC",
+  "umd": "dist/umd/index.js"
+}
