@@ -7,11 +7,9 @@
     "strict": true
   },
   "files": [],
-  "include": [],
-  "references": [
-    {
-      "path": "./tsconfig.lib.json"
-    }
+  "include": [
+    "src",
+    "types.d.ts"
   ],
   "extends": "../../../tsconfig.base.json"
 }

@@ -1,6 +1,4 @@
-import React from 'react';
-
-import type { PropsWithChildren } from 'react';
+import { createElement, type PropsWithChildren } from 'react';
 
 import { useRegisteredContainer } from '../container/useRegisteredContainer';
 import { Context } from '../context/context';
@@ -12,5 +10,5 @@ export function ServiceProvider<P extends object>({
   props = {} as P,
 }: PropsWithChildren<ProviderProps<P>>) {
   const container = useRegisteredContainer(props, provide);
-  return <Context.Provider value={container}>{children}</Context.Provider>;
+  return createElement(Context.Provider, { value: container }, children);
 }
