@@ -1,6 +1,6 @@
 {
   "name": "@re-active/oop",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.cjs.js",
   "module": "index.esm.js",
   "types": "index.cjs.d.ts",

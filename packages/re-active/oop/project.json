@@ -12,7 +12,7 @@
       "options": {
         "outputPath": "dist/packages/re-active/oop",
         "main": "packages/re-active/oop/src/index.ts",
-        "tsConfig": "packages/re-active/oop/tsconfig.lib.json",
+        "tsConfig": "packages/re-active/oop/tsconfig.json",
         "assets": [
           "packages/re-active/oop/*.md"
         ]
